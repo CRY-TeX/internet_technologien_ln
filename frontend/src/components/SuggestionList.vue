@@ -15,14 +15,33 @@ export default {
     Suggestion,
   },
 
-  data() {
+  data: function() {
     return {
-      items: [
-        "Ich möchte eine Portion Roastbeef machen.",
-        "Ein Ceasar Salad",
-        "Schlage mir ein Gericht vor",
-      ],
+      items: [],
     };
+  },
+
+  created: async function() {
+    try {
+      this.items = await this.get_suggestions();
+    } catch (error) {
+      console.error(error);
+      this.items = [];
+    }
+  },
+
+  methods: {
+    async get_suggestions() {
+      try {
+        let res = await fetch("http://localhost:3000/api/suggestions");
+        let data = await res.json();
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
   },
 };
 </script>

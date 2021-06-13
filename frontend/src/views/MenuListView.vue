@@ -1,8 +1,10 @@
 <template>
-  <PageBar page_name="Alle Gerichte" />
-  <ul class="meal-list">
-    <li v-for="index in 10" :key="index"><MealCard /></li>
-  </ul>
+  <div>
+    <PageBar page_name="Alle Gerichte" />
+    <ul class="meal-list">
+      <li v-for="meal in meals" :key="meal.link"><MealCard :meal="meal" /></li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -14,6 +16,22 @@ export default {
   components: {
     PageBar,
     MealCard,
+  },
+  data: function() {
+    return {
+      meals: [],
+    };
+  },
+  created: async function() {
+    try {
+      let res = await fetch("http://localhost:3000/api/meals");
+      let data = await res.json();
+      this.meals = data;
+      console.log(this.meals);
+    } catch (error) {
+      console.error(error);
+      this.meals = [];
+    }
   },
 };
 </script>

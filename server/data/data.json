@@ -1,0 +1,49 @@
+{
+    "suggestions": [
+        "Ich möchte eine Portion Roastbeef machen.",
+        "Ein Ceasar Salad",
+        "Schlage mir ein Gericht vor"
+    ],
+    "meals": [
+        {
+            "name": "Tomatensuppe",
+            "link": "https://www.chefkoch.de/rezepte/1776171287589131/Tomatensuppe.html",
+            "preview_url": "https://img.chefkoch-cdn.de/rezepte/1776171287589131/bilder/608604/crop-600x400/tomatensuppe.jpg",
+            "cooking_time": "30 min",
+            "difficulty": "simpel",
+            "calories": "430 kcal"
+        },
+        {
+            "name": "Pan Pizza mit Käse-Rand",
+            "link": "https://www.chefkoch.de/rezepte/3357251499163032/Pan-Pizza-mit-Kaese-Rand.html",
+            "preview_url": "https://img.chefkoch-cdn.de/rezepte/3357251499163032/bilder/1270395/crop-600x400/pan-pizza-mit-kaese-rand.jpg",
+            "cooking_time": "30 min",
+            "difficulty": "normal",
+            "calories": ""
+        },
+        {
+            "name": "Vegetarische Spinat-Gemüse-Lasagne mit Tomatensoße",
+            "link": "https://www.chefkoch.de/rezepte/2114131340630587/Vegetarische-Spinat-Gemuese-Lasagne-mit-Tomatensosse.html",
+            "preview_url": "https://img.chefkoch-cdn.de/rezepte/2114131340630587/bilder/1331935/crop-600x400/vegetarische-spinat-gemuese-lasagne-mit-tomatensosse.jpg",
+            "cooking_time": "25 min",
+            "difficulty": "normal",
+            "calories": ""
+        },
+        {
+            "name": "Mediterraner Reis mit Rucola und Tomaten",
+            "link": "https://www.chefkoch.de/rezepte/3807131579874955/Mediterraner-Reis-mit-Rucola-und-Tomaten.html",
+            "preview_url": "https://img.chefkoch-cdn.de/rezepte/3807131579874955/bilder/1271468/crop-600x400/mediterraner-reis-mit-rucola-und-tomaten.jpg",
+            "cooking_time": "20 min",
+            "difficulty": "normal",
+            "calories": "581 kcal"
+        },
+        {
+            "name": "Griechischer Reissalat mit gerösteten Mandeln",
+            "link": "https://www.chefkoch.de/rezepte/3807101579874367/Griechischer-Reissalat-mit-geroesteten-Mandeln.html",
+            "preview_url": "https://img.chefkoch-cdn.de/rezepte/3807101579874367/bilder/1271462/crop-600x400/griechischer-reissalat-mit-geroesteten-mandeln.jpg",
+            "cooking_time": "20 min",
+            "difficulty": "simpel",
+            "calories": "546 kcal"
+        }
+    ]
+}
