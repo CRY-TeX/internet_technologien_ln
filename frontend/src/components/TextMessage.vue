@@ -1,12 +1,12 @@
 <template>
-  <p :class="is_user ? 'msg-user' : 'msg-bot'">{{ msg }}</p>
+  <p :class="is_user ? 'msg-user' : 'msg-bot'">{{ msg.msg }}</p>
 </template>
 
 <script>
   export default {
     name: 'UserMessage',
     props: {
-      msg: String,
+      msg: Object,
       is_user: Boolean,
     },
   };

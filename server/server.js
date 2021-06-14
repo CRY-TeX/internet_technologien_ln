@@ -12,12 +12,22 @@ const wss = new ws.Server({ server });
 const PORT = process.env.PORT || 3000;
 const HOST_NAME = 'localhost';
 
-app.use(cors());
-app.use('/api', require('./api/routes'));
+// app.use(cors());
 
 // websocket implementation
 wss.on('connection', (socket) => {
-  socket.on('message', (message) => console.log(message));
+  console.log('New connection');
+
+  socket.on('message', (message) => {
+    json_message = JSON.parse(message);
+    console.log(json_message);
+    socket.send(
+      JSON.stringify({
+        ...require('./data/data.json'),
+        msg: json_message.msg,
+      })
+    );
+  });
 });
 
 // start express and ws server

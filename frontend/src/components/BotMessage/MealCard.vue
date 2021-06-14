@@ -1,15 +1,13 @@
 <template>
   <div class="card">
-    <img
-      class="preview"
-      src="../../assets/sample/Tomatensuppe.jpg"
-      alt="Gericht Preview"
-    />
+    <img class="preview" :src="msg.preview_url" alt="Gericht Preview" />
 
-    <button class="btn" @click="show_meals()">Alle Gerichte</button>
+    <button class="btn" @click="show_meals()" v-if="msg.has_meal_list">
+      Alle Gerichte
+    </button>
 
     <p class="answer">
-      {{ msg }}
+      {{ msg.msg }}
     </p>
   </div>
 </template>
@@ -20,7 +18,7 @@
   export default {
     name: 'AnswerCard',
     props: {
-      msg: String,
+      msg: Object,
     },
     methods: {
       show_meals() {

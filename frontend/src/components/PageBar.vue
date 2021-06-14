@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <nav class="pagebar">
       <h1 class="page-name">{{ page_name }}</h1>
       <button class="close" @click="close()">&times;</button>
@@ -26,6 +26,12 @@
 </script>
 
 <style scoped>
+  .container {
+    /* TODO: fix fade out animation */
+    /* position: sticky;
+    top: 0; */
+  }
+
   .pagebar {
     background: rgba(120, 192, 16, 0.83);
     padding: 0.7rem 3rem;

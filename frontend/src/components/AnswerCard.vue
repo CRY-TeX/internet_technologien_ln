@@ -2,14 +2,21 @@
   <div class="card" @click.self="show_chat()">
     <img
       class="preview"
-      src="../assets/sample/Tomatensuppe.jpg"
+      :src="last_response.preview_url"
       alt="Gericht Preview"
+      v-if="last_response.preview_url !== ''"
     />
 
-    <button class="btn" @click="show_meals()">Alle Gerichte</button>
+    <button
+      class="btn"
+      @click="show_meals()"
+      v-if="last_response.has_meal_list === true"
+    >
+      Alle Gerichte
+    </button>
 
     <p class="answer">
-      Was halten Sie von einer italienischen Tomatensuppe?
+      {{ last_response.msg }}
     </p>
   </div>
 </template>
@@ -27,6 +34,19 @@
         router.push({ name: 'meals' });
       },
     },
+    computed: {
+      last_response: function() {
+        return this.$store.state.conversation.length === 0
+          ? {
+              has_meal_list: false,
+              msg: 'Stellen sie mir eine Frage',
+              preview_url: '',
+            }
+          : this.$store.state.conversation[
+              this.$store.state.conversation.length - 1
+            ].response;
+      },
+    },
   };
 </script>
 
@@ -39,6 +59,7 @@
     height: 100%;
     overflow-y: auto;
     max-width: 600px;
+    min-width: 30%;
   }
 
   .card:hover {

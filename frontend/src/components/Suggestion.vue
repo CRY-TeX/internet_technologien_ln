@@ -1,5 +1,5 @@
 <template>
-  <button class="suggestion">
+  <button class="suggestion" @click="send_suggestion()">
     {{ msg }}
   </button>
 </template>
@@ -13,6 +13,15 @@
         default: '#EMPTY#',
       },
     },
+    methods: {
+      send_suggestion: function() {
+        this.$store.state.socket.send(
+          JSON.stringify({
+            msg: this.msg,
+          })
+        );
+      },
+    },
   };
 </script>
 
@@ -21,7 +30,7 @@
   .suggestion {
     font-family: 'Poppins', sans-serif;
     font-size: 0.9em;
-    background: #c4c4c4;
+    background-color: #c4c4c4;
     border-radius: 30px;
     border: none;
     color: #ffffff;

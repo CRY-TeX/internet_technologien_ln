@@ -1,24 +1,10 @@
 <template>
-  <div>
+  <div class="container">
     <PageBar page_name="Chat" />
 
-    <div class="msg-container">
-      <TextMessage
-        class="user-msg"
-        :is_user="true"
-        msg="Ich möchte ein Mittagessen kochen"
-      />
-      <BotMessage class="bot-msg" msg="Was schwebt ihnen denn genau vor?" />
-      <TextMessage
-        class="user-msg"
-        :is_user="true"
-        msg="Ich möchte ein Mittagessen kochen. Aber bitte ein geiles Roastbeef mit viel Soße und Zwiebeln"
-      />
-      <BotMessage
-        class="bot-msg"
-        msg="Kann ich ihnen eine Tomatensuppe vorschlagen?"
-        :is_preview="true"
-      />
+    <div class="msg-box" v-for="item in get_conversation" :key="item.index">
+      <TextMessage class="user-msg" :is_user="true" :msg="item.msg" />
+      <BotMessage class="bot-msg" :msg="item.response" />
     </div>
   </div>
 </template>
@@ -35,11 +21,20 @@
       TextMessage,
       BotMessage,
     },
+    computed: {
+      get_conversation: function() {
+        return this.$store.state.conversation;
+      },
+    },
   };
 </script>
 
 <style scoped>
-  .msg-container {
+  .container {
+    margin-bottom: 5rem;
+  }
+
+  .msg-box {
     width: 90%;
     margin: 2.5rem auto 0 auto;
     list-style: none;

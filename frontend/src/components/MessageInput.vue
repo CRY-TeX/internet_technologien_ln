@@ -1,12 +1,16 @@
 <template>
-  <div class="message">
+  <div
+    class="message"
+    :style="{ 'border-color': send_confirmed ? '#8ac734' : '#666666' }"
+  >
     <input
       type="text"
       name="message"
-      id="message"
       placeholder="Fragen Sie mich etwas..."
+      v-model="message"
+      @keyup.enter="send_msg()"
     />
-    <button class="send">
+    <button class="send" @click="send_msg()">
       <img src="../assets/send_icon.png" alt="Senden" />
     </button>
   </div>
@@ -15,6 +19,28 @@
 <script>
   export default {
     name: 'MessageInput',
+    data: function() {
+      return {
+        message: '',
+        send_confirmed: false,
+      };
+    },
+    methods: {
+      send_msg: function() {
+        if (this.message === '') return;
+
+        this.$store.state.socket.send(
+          JSON.stringify({
+            msg: this.message,
+          })
+        );
+        this.send_confirmed = true;
+
+        setTimeout(() => {
+          this.send_confirmed = false;
+        }, 700);
+      },
+    },
   };
 </script>
 

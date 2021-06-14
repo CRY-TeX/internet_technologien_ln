@@ -1,5 +1,5 @@
 <template>
-  <MealCard v-if="is_preview" :msg="msg" />
+  <MealCard v-if="msg.preview_url !== ''" :msg="msg" />
   <TextMessage v-else :is_user="false" :msg="msg" />
 </template>
 
@@ -14,8 +14,7 @@
       MealCard,
     },
     props: {
-      msg: String,
-      is_preview: Boolean,
+      msg: Object,
     },
   };
 </script>

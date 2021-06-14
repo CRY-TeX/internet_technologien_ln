@@ -45,5 +45,10 @@
             "difficulty": "simpel",
             "calories": "546 kcal"
         }
-    ]
+    ],
+    "response": {
+        "has_meal_list": true,
+        "msg": "this is a sample response",
+        "preview_url": "https://img.chefkoch-cdn.de/rezepte/3807131579874955/bilder/1271468/crop-600x400/mediterraner-reis-mit-rucola-und-tomaten.jpg"
+    }
 }
