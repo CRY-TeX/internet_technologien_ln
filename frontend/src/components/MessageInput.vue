@@ -39,6 +39,7 @@
         setTimeout(() => {
           this.send_confirmed = false;
         }, 700);
+        this.$store.commit('spin');
       },
     },
   };

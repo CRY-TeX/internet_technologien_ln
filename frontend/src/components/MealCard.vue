@@ -63,6 +63,7 @@
     /* min-width: 309px; */
     width: 100%;
     overflow: auto;
+    /* TODO: add hover color */
   }
 
   /* TODO: fix mobile layout for cooking data -> kinda done */

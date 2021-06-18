@@ -20,6 +20,7 @@
             msg: this.msg,
           })
         );
+        this.$store.commit('spin');
       },
     },
   };

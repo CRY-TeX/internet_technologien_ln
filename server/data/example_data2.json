@@ -1,0 +1,74 @@
+{
+    "meals": [
+        {
+            "name": "Knusprig dünne Pizza mit Chorizo und Mozzarella",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/889601194503872/bilder/1160586/crop-138x138/knusprig-duenne-pizza-mit-chorizo-und-mozzarella.jpg",
+            "cooking_time": "30 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/889601194503872/Knusprig-duenne-Pizza-mit-Chorizo-und-Mozzarella.html"
+        },
+        {
+            "name": "Italienischer Pizzateig",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/716331174378295/bilder/763994/crop-138x138/italienischer-pizzateig.jpg",
+            "cooking_time": "15 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/716331174378295/Italienischer-Pizzateig.html"
+        },
+        {
+            "name": "Pizzateig",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/1229661228043441/bilder/1040276/crop-138x138/pizzateig.jpg",
+            "cooking_time": "15 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/1229661228043441/Pizzateig.html"
+        },
+        {
+            "name": "Pizzateig",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/611671161092488/bilder/1369628/crop-138x138/pizzateig.jpg",
+            "cooking_time": "10 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/611671161092488/Pizzateig.html"
+        },
+        {
+            "name": "Pan Pizza mit Käse-Rand",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/3357251499163032/bilder/1270395/crop-138x138/pan-pizza-mit-kaese-rand.jpg",
+            "cooking_time": "30 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/3357251499163032/Pan-Pizza-mit-Kaese-Rand.html"
+        },
+        {
+            "name": "Fladenbrotpizza \"Napoli\"",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/2520471395234003/bilder/675062/crop-138x138/fladenbrotpizza-napoli.jpg",
+            "cooking_time": "25 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/2520471395234003/Fladenbrotpizza-Napoli.html"
+        },
+        {
+            "name": "Blätterteigpizza mit Ziegenkäse, Honig und Kirschtomaten",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/2662481418063883/bilder/763908/crop-138x138/blaetterteigpizza-mit-ziegenkaese-honig-und-kirschtomaten.jpg",
+            "cooking_time": "20 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/2662481418063883/Blaetterteigpizza-mit-Ziegenkaese-Honig-und-Kirschtomaten.html"
+        },
+        {
+            "name": "Marinas Pizzateig mit Backpulver",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/1827531296308446/bilder/1329063/crop-138x138/marinas-pizzateig-mit-backpulver.jpg",
+            "cooking_time": "20 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/1827531296308446/Marinas-Pizzateig-mit-Backpulver.html"
+        },
+        {
+            "name": "Die besten Pizzabrötchen aller Zeiten",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/740511176724575/bilder/1252933/crop-138x138/die-besten-pizzabroetchen-aller-zeiten.jpg",
+            "cooking_time": "20 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/740511176724575/Die-besten-Pizzabroetchen-aller-Zeiten.html"
+        },
+        {
+            "name": "Low Carb Pizzarolle",
+            "preview_image": "https://img.chefkoch-cdn.de/rezepte/2814751433498134/bilder/906437/crop-138x138/low-carb-pizzarolle.jpg",
+            "cooking_time": "10 Min.",
+            "difficulty": null,
+            "link": "https://www.chefkoch.de/rezepte/2814751433498134/Low-Carb-Pizzarolle.html"
+        }
+    ]
+}

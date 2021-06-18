@@ -6,6 +6,15 @@ const store = createStore({
     suggestions: [],
     meals: [],
     conversation: [],
+    spin: false,
+  },
+  mutations: {
+    spin: (state) => {
+      state.spin = true;
+      setTimeout(() => {
+        state.spin = false;
+      }, 3000);
+    },
   },
 });
 

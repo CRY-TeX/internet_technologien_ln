@@ -15,6 +15,7 @@
 <script>
   import router from '../../router';
 
+  // TODO: rename component
   export default {
     name: 'AnswerCard',
     props: {
