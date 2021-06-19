@@ -1,3 +1,7 @@
+// implement context into bot class
+// we need some way to construct the right interface for given question / intent
+// should responses be saved in array etc...
+
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
@@ -22,19 +26,41 @@ module.exports = class Bot {
     }
   }
 
-  async #fetch_data(data) {
+  async #fetch_luis(msg) {
     try {
-      const res = await fetch(`${LUIS_ENDPONT}${data.msg}`);
+      const res = await fetch(`${LUIS_ENDPONT}${msg}`);
       return await res.json();
     } catch (error) {
       console.error(error);
     }
   }
 
-  async get_response(callback) {
+  async get_response(msg, callback) {
     // construct response
     try {
-      callback(this.#res_data);
+      // get luis response
+      const luis_res = await this.#fetch_luis(msg);
+
+      // get top intent
+      const top_intent = luis_res.prediction.topIntent;
+      let response_data = null;
+
+      // match pattern of top intent with response data
+      //  -> randomize response sentence
+      for (let el of this.#res_data) {
+        if (el.intent === top_intent) {
+          if (el.entities) {
+            response_data = el.answers[0].answers[0];
+            break;
+          } else {
+            response_data = el.answers[0];
+            break;
+          }
+        }
+      }
+
+      // pass response data to callback function
+      callback(response_data);
     } catch (error) {
       console.error(error);
     }

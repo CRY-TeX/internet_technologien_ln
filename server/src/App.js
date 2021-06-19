@@ -37,7 +37,7 @@ module.exports = class App {
     });
   }
 
-  #base_address() {
+  get #base_address() {
     return `${this.#http_server.address().address}:${
       this.#http_server.address().port
     }`;
@@ -46,15 +46,15 @@ module.exports = class App {
   /**
    * @return {string} - the http url of the server
    */
-  http_url() {
-    return `http://${this.#base_address()}`;
+  get http_url() {
+    return `http://${this.#base_address}`;
   }
 
   /**
    * @return {string} - the websocket url of the server
    */
-  websocket_url() {
-    return `ws://${this.#base_address()}`;
+  get websocket_url() {
+    return `ws://${this.#base_address}`;
   }
 
   #set_websocket_events() {
@@ -63,9 +63,16 @@ module.exports = class App {
 
       connection.on('message', (message) => {
         // analyze message
-        this.#bot.get_response((response) => {
-          connection.sendUTF(response);
-        });
+        try {
+          this.#bot.get_response(
+            JSON.parse(message.utf8Data).msg,
+            (response) => {
+              connection.sendUTF(response);
+            }
+          );
+        } catch (error) {
+          console.error(error);
+        }
       });
     });
   }

@@ -4,3 +4,4 @@
     -> dont create any websocket connection with bot
     -> create new threads/processes for each bot and run it in the background
     -> create bot on local storage and connect it over websockets
+- create interface for bot and response data
