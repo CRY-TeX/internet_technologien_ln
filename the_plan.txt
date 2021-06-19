@@ -1,0 +1,6 @@
+
+- Split up code into understandable parts
+- define clear pipeline for server and bot
+    -> dont create any websocket connection with bot
+    -> create new threads/processes for each bot and run it in the background
+    -> create bot on local storage and connect it over websockets
