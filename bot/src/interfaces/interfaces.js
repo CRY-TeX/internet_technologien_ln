@@ -28,77 +28,10 @@
 
 */
 
-// TODO: define interface for input data
-
-class InformationExtractorInterface {
-  #input_data = null;
-
-  constructor() {
-    if (new.target === InformationExtractorInterface)
-      throw new TypeError(
-        `Cannot construct ${InformationExtractorInterface.name} directly`
-      );
-
-    if (this.get_extracted_data === undefined)
-      throw new TypeError('method get_extracted_data must be implemented');
-  }
-
-  // data: json_obj
-  set_input_data(input_data) {
-    this.#input_data = input_data;
-  }
-
-  get_input_data() {
-    return this.#input_data;
-  }
-
-  // virtual method get_extracted_data() : json_obj
-}
-
-class ResponseCreatorInterface {
-  #analyzed_data = null;
-
-  constructor() {
-    if (new.target === ResponseCreatorInterface)
-      throw new TypeError(
-        `Cannot construct ${ResponseCreatorInterface.name} directly`
-      );
-
-    if (this.is_compatible === undefined)
-      throw new TypeError('method is_compatible must be implemented');
-
-    if (this.create_response_implementation === undefined)
-      throw new TypeError(
-        'method create_response_implementation must be implemented'
-      );
-  }
-
-  // is_compatible(InformationExtractorInterface) : bool
-
-  // create_response_implementation(InformationExtractorInterface) : void
-
-  // method create_response(InformationExtractorInterface) : void
-  create_response(information_extractor) {
-    if (information_extractor === null || information_extractor === undefined)
-      throw new TypeError('InformationExtractor is null or undefined');
-
-    if (!this.is_compatible(information_extractor))
-      throw new TypeError(
-        `${InformationExtractorInterface.name} "${information_extractor.constructor.name}" is not compatible with ${ResponseCreatorInterface.name}"`
-      );
-
-    this.create_response_implementation(information_extractor);
-  }
-
-  get_response_data() {
-    return this.#analyzed_data; // json_obj
-  }
-}
-
 // Interface BotResponse
 class BotResponseInterface {
   #information_extractor = null;
-  #data_analyzer = null;
+  #response_creator = null;
 
   constructor() {
     if (new.target === IBotResponse)
@@ -109,9 +42,9 @@ class BotResponseInterface {
         `variable ${this.#information_extractor.name} needs to be instantiated`
       );
 
-    if (this.#data_analyzer === null)
+    if (this.#response_creator === null)
       throw new TypeError(
-        `variable ${this.#data_analyzer.name} needs to be instantiated`
+        `variable ${this.#response_creator.name} needs to be instantiated`
       );
   }
 
@@ -120,10 +53,14 @@ class BotResponseInterface {
     this.#information_extractor.set_input_data(input_data);
   }
 
-  // virtual method get_response_data() : json_obj
+  analyze_data() {
+    this.#information_extractor.extract_data();
+    this.#response_creator.create_response(this.#information_extractor);
+  }
+
+  // TODO: virtual method get_response_data() : json_obj
   get_response_data() {
-    this.analyze_data(this.#information_extractor);
-    return this.get_analyzed_data();
+    return this.#response_creator.get_response_data();
   }
 }
 
