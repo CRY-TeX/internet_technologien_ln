@@ -8,7 +8,6 @@ const { SimpleIntent, PhraseListData } = require('./adaptor_data_objs');
 const { ResponseData } = require('./response_data');
 
 class ResponseCreatorInterface {
-  _intent = null;
   _response_data = null;
 
   constructor() {
@@ -22,13 +21,19 @@ class ResponseCreatorInterface {
 
     if (this._create_response_implementation === undefined)
       throw new TypeError(
-        'method #create_response_implementation must be implemented'
+        'method _create_response_implementation must be implemented'
       );
+
+    if (this.fits_input === undefined)
+      throw new TypeError('method fits_intent must be implemented');
+
   }
 
   // is_compatible(InformationExtractorInterface) : bool
 
   // create_response_implementation(InformationExtractorInterface) : void
+
+  // fits_input(input_data: json_obj) : boolean
 
   // method create_response(InformationExtractorInterface) : void
   create_response(information_extractor) {
@@ -49,6 +54,7 @@ class ResponseCreatorInterface {
 }
 
 class NoneResponseCreator extends ResponseCreatorInterface {
+  #INTENT = 'None';
   #answers = [
     'Entschuldigen Sie, ich habe sie nicht verstanden.',
     'Können sie das bitte nochmal wiederholen',
@@ -58,7 +64,6 @@ class NoneResponseCreator extends ResponseCreatorInterface {
 
   constructor() {
     super();
-    super._intent = 'None';
   }
 
   is_compatible(information_extractor) {
@@ -69,9 +74,17 @@ class NoneResponseCreator extends ResponseCreatorInterface {
     // TODO: change if luis also recognizes entities in None intent
     return this.#answers[Math.random() * this.#answers.length];
   }
+
+  static fits_input(input_data) {
+    return input_data.prediction.topIntent === super.#INTENT;
+  }
 }
 
 class LunchResponseCreator extends ResponseCreatorInterface {
+  #INTENT = 'want-food';
+  #DOMAIN = 'menu-type';
+  #ENTITY = 'Mittagessen';
+
   #required_score = 0.8;
   #under_score_answers = [
     'Ich konnte sie leider nicht genau verstehen. Wollen sie ein Mittagessen kochen?',
@@ -84,7 +97,6 @@ class LunchResponseCreator extends ResponseCreatorInterface {
 
   constructor() {
     super();
-    super._intent = 'Mittagessen';
   }
 
   is_compatible(information_extractor) {
@@ -109,4 +121,13 @@ class LunchResponseCreator extends ResponseCreatorInterface {
       );
     }
   }
+
+  fits_input(input_data) {
+    return input_data.prediction.topIntent === this.#INTENT && input_data.entities[this.#DOMAIN][this.#ENTITY] !== undefined;
+  }
+}
+
+module.exports = {
+  NoneResponseCreator,
+  LunchResponseCreator
 }

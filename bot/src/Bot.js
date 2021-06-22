@@ -6,11 +6,13 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 
+const { BotResponse, BotResponseFactory } = require('./response/bot_response');
+
 const LUIS_ENDPONT =
   'https://westeurope.api.cognitive.microsoft.com/luis/prediction/v3.0/apps/ecd8f1f0-f233-4a40-a035-ba44df647dfe/slots/production/predict?subscription-key=1659ae301f684ea5b77dc144327fe0d2&verbose=true&show-all-intents=true&log=true&query=';
 
-module.exports = class Bot {
-  #res_data;
+class Bot {
+  #res_data = null;
 
   constructor() {
     // TODO: implement context
@@ -41,28 +43,18 @@ module.exports = class Bot {
       // get luis response
       const luis_res = await this.#fetch_luis(msg);
 
-      // get top intent
-      const top_intent = luis_res.prediction.topIntent;
-      let response_data = null;
-
-      // match pattern of top intent with response data
-      //  -> randomize response sentence
-      for (let el of this.#res_data) {
-        if (el.intent === top_intent) {
-          if (el.entities) {
-            response_data = el.answers[0].answers[0];
-            break;
-          } else {
-            response_data = el.answers[0];
-            break;
-          }
-        }
-      }
+      const bot_response = BotResponseFactory.make_response(luis_res);
+      bot_response.set_input_data(luis_res);
+      bot_response.analyze_data();
 
       // pass response data to callback function
-      callback(response_data);
+      callback(bot_response.get_response_data());
     } catch (error) {
       console.error(error);
     }
   }
+}
+
+module.exports = {
+  Bot,
 };

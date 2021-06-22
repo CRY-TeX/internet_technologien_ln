@@ -1,13 +1,14 @@
 const http = require('http');
 const express = require('express');
 const websocket = require('websocket');
-const Bot = require('../../bot/src/Bot');
+
+const { BotUserConnector } = require('./bot_user_connector');
 
 module.exports = class App {
-  #express_app;
-  #http_server;
-  #ws_server;
-  #bot;
+  #express_app = null;
+  #http_server = null;
+  #ws_server = null;
+  #bot_user_map = [];
 
   /**
    * @param host_name - host name or ip of server
@@ -24,7 +25,7 @@ module.exports = class App {
       httpServer: this.#http_server,
       autoAcceptConnections: true, // TODO: change later to false
     });
-    this.#bot = new Bot();
+    this.#bot_user_map = [];
   }
 
   /**
@@ -60,20 +61,15 @@ module.exports = class App {
   #set_websocket_events() {
     this.#ws_server.on('connect', (connection) => {
       // store connection
+      this.#bot_user_map.push(new BotUserConnector(connection));
 
-      connection.on('message', (message) => {
-        // analyze message
-        try {
-          this.#bot.get_response(
-            JSON.parse(message.utf8Data).msg,
-            (response) => {
-              connection.sendUTF(response);
-            }
-          );
-        } catch (error) {
-          console.error(error);
-        }
+      connection.on('close', () => {
+        this.#bot_user_map = this.#bot_user_map.filter(
+          (el) => el.get_connection().connected
+        );
       });
     });
+
+    // TODO: handle disconnect
   }
 };

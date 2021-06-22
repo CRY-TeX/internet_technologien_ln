@@ -16,15 +16,15 @@ class InformationExtractorInterface {
 
   // data: json_obj
   set_input_data(input_data) {
-    this._input_data._input_data = input_data;
+    this._input_data = input_data;
   }
 
   get_input_data() {
-    return this._input_data._input_data;
+    return this._input_data;
   }
 
   get_extracted_data() {
-    return this._input_data._extracted_data;
+    return this._extracted_data;
   }
 
   _get_top_intent() {

@@ -28,24 +28,26 @@
 
 */
 
+const {
+  IntentExtractor,
+  PhraseListExtractor,
+} = require('./information_extractors');
+const {
+  NoneResponseCreator,
+  LunchResponseCreator,
+} = require('./response_creators');
+
 // Interface BotResponse
-class BotResponseInterface {
+class BotResponse {
   #information_extractor = null;
   #response_creator = null;
 
-  constructor() {
-    if (new.target === IBotResponse)
+  constructor(information_extractor, response_creator) {
+    if (new.target === BotResponse)
       throw new TypeError(`Cannot construct ${IBotResponse.name} directly`);
 
-    if (this.#information_extractor === null)
-      throw new TypeError(
-        `variable ${this.#information_extractor.name} needs to be instantiated`
-      );
-
-    if (this.#response_creator === null)
-      throw new TypeError(
-        `variable ${this.#response_creator.name} needs to be instantiated`
-      );
+    this.#information_extractor = information_extractor;
+    this.#response_creator = response_creator;
   }
 
   // sets the nformationExtractor instance's input data
@@ -58,7 +60,6 @@ class BotResponseInterface {
     this.#response_creator.create_response(this.#information_extractor);
   }
 
-  // TODO: virtual method get_response_data() : json_obj
   get_response_data() {
     return this.#response_creator.get_response_data();
   }
@@ -67,9 +68,23 @@ class BotResponseInterface {
 class BotResponseFactory {
   /**
    * @param {input_data} - json data object
-   * @return {BotResponseInterface}
+   * @return {BotResponse}
    */
-  make_response(input_data) {
-    return null;
+  static make_response(input_data) {
+    if (NoneResponseCreator.fits_input(input_data)) {
+      return new BotResponse(new IntentExtractor(), new NoneResponseCreator());
+    } else if (LunchResponseCreator.fits_input(input_data)) {
+      return new BotResponse(
+        new PhraseListExtractor(),
+        new LunchResponseCreator()
+      );
+    } else {
+      return null;
+    }
   }
 }
+
+module.exports = {
+  BotResponse,
+  BotResponseFactory,
+};
