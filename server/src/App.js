@@ -34,7 +34,7 @@ module.exports = class App {
   start() {
     this.#set_websocket_events();
     this.#http_server.listen(this.port, this.host_name, () => {
-      console.log(`Server started: ${this.http_url()}`);
+      console.log(`Server started: ${this.http_url}`);
     });
   }
 

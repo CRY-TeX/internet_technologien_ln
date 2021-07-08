@@ -43,9 +43,6 @@ class BotResponse {
   #response_creator = null;
 
   constructor(information_extractor, response_creator) {
-    if (new.target === BotResponse)
-      throw new TypeError(`Cannot construct ${IBotResponse.name} directly`);
-
     this.#information_extractor = information_extractor;
     this.#response_creator = response_creator;
   }

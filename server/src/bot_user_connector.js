@@ -9,9 +9,16 @@ class BotUserConnector {
     this.#bot = new Bot();
 
     this.#ws_connection.on('message', (message) => {
-      this.#bot.get_response(message, (response) => {
-        this.#ws_connection.sendUTF(JSON.stringify(response));
-      });
+      try {
+        // TODO: give response to user that someting went wrong
+        const json_msg_data = JSON.parse(message.utf8Data);
+
+        this.#bot.get_response(json_msg_data.msg, (response) => {
+          this.#ws_connection.sendUTF(JSON.stringify(response));
+        });
+      } catch (error) {
+        console.error(error);
+      }
     });
   }
 

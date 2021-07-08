@@ -10,7 +10,7 @@ class InformationExtractorInterface {
         `Cannot construct ${InformationExtractorInterface.name} directly`
       );
 
-    if (this._input_data.extract_data === undefined)
+    if (this.extract_data === undefined)
       throw new TypeError('method get_extracted_data must be implemented');
   }
 
@@ -67,12 +67,14 @@ class PhraseListExtractor extends InformationExtractorInterface {
 
   extract_data() {
     try {
-      if (super._input_data.prediction.topIntent === undefined)
+      if (this._input_data.prediction.topIntent === undefined)
         throw new TypeError('topIntent is undefined');
 
-      const category = Object.keys(this._input_data.entities)[0];
-      const entity = Object.keys(this._input_data.entities[category])[0];
-      super._extracted_data = new PhraseListData(
+      const category = Object.keys(this._input_data.prediction.entities)[0];
+      const entity = Object.keys(
+        this._input_data.prediction.entities[category]
+      )[0];
+      this._extracted_data = new PhraseListData(
         super._get_top_intent(),
         super._get_top_intent_score(),
         category,
