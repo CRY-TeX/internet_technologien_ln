@@ -28,46 +28,51 @@
 
 */
 
-const {
+import {
+  BaseInformationExtractor,
   IntentExtractor,
   PhraseListExtractor,
-} = require('./information_extractors');
-const {
+} from './information_extractors';
+
+import {
+  BaseResponseCreator,
   NoneResponseCreator,
   LunchResponseCreator,
-} = require('./response_creators');
+} from './response_creators';
 
-// Interface BotResponse
-class BotResponse {
-  #information_extractor = null;
-  #response_creator = null;
+export class BotResponse<
+  T extends BaseInformationExtractor,
+  V extends BaseResponseCreator
+> {
+  private information_extractor: BaseInformationExtractor;
+  private response_creator: BaseResponseCreator;
 
-  constructor(information_extractor, response_creator) {
-    this.#information_extractor = information_extractor;
-    this.#response_creator = response_creator;
+  public constructor(information_extractor: T, response_creator: V) {
+    this.information_extractor = information_extractor;
+    this.response_creator = response_creator;
   }
 
   // sets the nformationExtractor instance's input data
-  set_input_data(input_data) {
-    this.#information_extractor.set_input_data(input_data);
+  public set_input_data(input_data: object) {
+    this.information_extractor.set_input_data(input_data);
   }
 
-  analyze_data() {
-    this.#information_extractor.extract_data();
-    this.#response_creator.create_response(this.#information_extractor);
+  public analyze_data() {
+    this.information_extractor.extract_data();
+    this.response_creator.create_response(this.information_extractor);
   }
 
-  get_response_data() {
-    return this.#response_creator.get_response_data();
+  public get_response_data() {
+    return this.response_creator.get_response_data();
   }
 }
 
-class BotResponseFactory {
+export class BotResponseFactory {
   /**
    * @param {input_data} - json data object
    * @return {BotResponse}
    */
-  static make_response(input_data) {
+  public static make_response(input_data: object) {
     if (NoneResponseCreator.fits_input(input_data)) {
       return new BotResponse(new IntentExtractor(), new NoneResponseCreator());
     } else if (LunchResponseCreator.fits_input(input_data)) {
@@ -80,8 +85,3 @@ class BotResponseFactory {
     }
   }
 }
-
-module.exports = {
-  BotResponse,
-  BotResponseFactory,
-};

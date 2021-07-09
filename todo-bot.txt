@@ -1,0 +1,17 @@
+### BOT TODO ###
+
+- context
+    -> context should just be array of BotResponse
+    -> Elements should be accessible to all BotResponse's in the array
+    -> There should be a hook where another BotResponse can interpet the data of another BotResponse
+    -> context elements should probably be flagged as done once purpose is served
+
+- there needs to be 
+
+- different actions on different conditions
+    -> for example different reaction if information is missing in context
+       than when information is complete
+    
+    ==> Maybe actions need to be defined => interface for scraping ready response
+        -> scrape chefkoch with that kind of information
+        -> needs to be dynamically tied to the rest of the responses -> strategy pattern ?...
