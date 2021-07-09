@@ -14,7 +14,7 @@ interface IMealItem {
   difficulty: string;
 }
 
-export interface IResponseData {
+export interface IApiResponse {
   answer_message: IAnswerMessage;
   suggestions?: string[];
   meal_list?: IMealItem[];

@@ -1,13 +1,20 @@
-type Intents = object;
 type Entities = object;
 
-export interface ILuisResponseData {
+export interface ILuisResponse {
   query: string;
   prediction: IPrediction;
 }
 
 export interface IPrediction {
   topIntent: string;
-  intents: Intents;
-  entities: Entities;
+  intents: {
+    intent: IIntent;
+  };
+  entities?: Entities;
+}
+
+interface IIntent {
+  name: {
+    score: number;
+  };
 }
