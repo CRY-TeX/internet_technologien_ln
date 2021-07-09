@@ -28,26 +28,14 @@
 
 */
 
-import {
-  BaseInformationExtractor,
-  IntentExtractor,
-  PhraseListExtractor,
-} from './information_extractors';
+import { BaseInformationExtractor, IntentExtractor, PhraseListExtractor } from './information_extractors';
+import { BaseResponseCreator, NoneResponseCreator, LunchResponseCreator } from './response_creators';
 
-import {
-  BaseResponseCreator,
-  NoneResponseCreator,
-  LunchResponseCreator,
-} from './response_creators';
-
-export class BotResponse<
-  T extends BaseInformationExtractor,
-  V extends BaseResponseCreator
-> {
+export class BotResponse {
   private information_extractor: BaseInformationExtractor;
   private response_creator: BaseResponseCreator;
 
-  public constructor(information_extractor: T, response_creator: V) {
+  public constructor(information_extractor: BaseInformationExtractor, response_creator: BaseResponseCreator) {
     this.information_extractor = information_extractor;
     this.response_creator = response_creator;
   }
@@ -76,10 +64,7 @@ export class BotResponseFactory {
     if (NoneResponseCreator.fits_input(input_data)) {
       return new BotResponse(new IntentExtractor(), new NoneResponseCreator());
     } else if (LunchResponseCreator.fits_input(input_data)) {
-      return new BotResponse(
-        new PhraseListExtractor(),
-        new LunchResponseCreator()
-      );
+      return new BotResponse(new PhraseListExtractor(), new LunchResponseCreator());
     } else {
       return null;
     }

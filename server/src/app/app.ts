@@ -43,9 +43,16 @@ export default class App {
   }
 
   private get base_address(): string {
-    const address_info: net.AddressInfo =
-      this.http_server.address() as net.AddressInfo;
-    return `${address_info.address}:${address_info.port}`;
+    try {
+      const address_info: string | net.AddressInfo | null = this.http_server.address();
+      if (typeof address_info === 'string' || address_info === null)
+        throw new Error('could not get address info from http server');
+
+      return `${address_info.address}:${address_info.port}`;
+    } catch (error) {
+      console.error(error);
+      return '';
+    }
   }
 
   /**
@@ -68,9 +75,7 @@ export default class App {
       this.bot_user_map.push(new BotUserConnector(connection));
 
       connection.on('close', () => {
-        this.bot_user_map = this.bot_user_map.filter(
-          (el) => el.get_connection().connected
-        );
+        this.bot_user_map = this.bot_user_map.filter((el) => el.get_connection().connected);
       });
     });
 

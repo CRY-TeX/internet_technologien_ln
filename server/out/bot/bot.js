@@ -51,7 +51,7 @@ var Bot = /** @class */ (function () {
     function Bot() {
         // TODO: implement context
         try {
-            var file_content = fs_1.default.readFileSync(path_1.default.join(path_1.default.dirname(__filename), '../data/bot_response.json'));
+            var file_content = fs_1.default.readFileSync(path_1.default.join(path_1.default.dirname(__filename), '../../data/bot_response.json'));
             this.res_data = JSON.parse(file_content);
         }
         catch (error) {

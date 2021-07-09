@@ -1,6 +1,6 @@
 import websocket from 'websocket';
 
-import Bot from './bot/bot';
+import Bot from '../bot/bot';
 
 export default class BotUserConnector {
   private ws_connection: websocket.connection;

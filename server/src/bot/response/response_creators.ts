@@ -1,32 +1,22 @@
-import {
-  BaseInformationExtractor,
-  IntentExtractor,
-  PhraseListExtractor,
-} from './information_extractors';
+import { BaseInformationExtractor, IntentExtractor, PhraseListExtractor } from './information_extractors';
 
-import { SimpleIntent, PhraseListData } from './adaptor_data_objs';
-import { IResponseData } from './response_data';
+import { IIntent } from '../data_interfaces/adaptor_data_objs';
+import { IResponseData } from '../data_interfaces/api_response_data';
 
 export abstract class BaseResponseCreator {
   // TODO: fix type
   private response_data: IResponseData | null = null;
 
-  public abstract is_compatible<T extends BaseInformationExtractor>(
-    information_extractor: T
-  ): boolean;
+  public abstract is_compatible<T extends BaseInformationExtractor>(information_extractor: T): boolean;
 
-  protected abstract return_response<T extends BaseInformationExtractor>(
-    information_extractor: T
-  ): IResponseData;
+  protected abstract return_response<T extends BaseInformationExtractor>(information_extractor: T): IResponseData;
 
   // TODO: fix object type
   public static fits_input(input_data: object): boolean {
     return false;
   }
 
-  public create_response<T extends BaseInformationExtractor>(
-    information_extractor: T
-  ): void {
+  public create_response<T extends BaseInformationExtractor>(information_extractor: T): void {
     if (!this.is_compatible(information_extractor))
       throw new TypeError(
         `${BaseInformationExtractor.name} "${information_extractor.constructor.name}" is not compatible with ${BaseResponseCreator.name}"`
@@ -49,23 +39,16 @@ export class NoneResponseCreator extends BaseResponseCreator {
     'Wie bitte?',
   ];
 
-  public is_compatible<T extends BaseInformationExtractor>(
-    information_extractor: T
-  ): boolean {
+  public is_compatible<T extends BaseInformationExtractor>(information_extractor: T): boolean {
     return information_extractor.constructor === IntentExtractor;
   }
 
-  protected return_response<T extends BaseInformationExtractor>(
-    information_extractor: T
-  ): IResponseData {
+  protected return_response<T extends BaseInformationExtractor>(information_extractor: T): IResponseData {
     // TODO: change if luis also recognizes entities in None intent
     // return this.#answers[Math.random() * this.#answers.length];
     const res: IResponseData = {
       answer_message: {
-        message:
-          NoneResponseCreator.ANSWERS[
-            Math.random() * NoneResponseCreator.ANSWERS.length
-          ],
+        message: NoneResponseCreator.ANSWERS[Math.random() * NoneResponseCreator.ANSWERS.length],
       },
     };
 
@@ -93,35 +76,25 @@ export class LunchResponseCreator extends BaseResponseCreator {
   ];
   public static readonly SUGGESTIONS = [];
 
-  public is_compatible<T extends BaseInformationExtractor>(
-    information_extractor: T
-  ): boolean {
+  public is_compatible<T extends BaseInformationExtractor>(information_extractor: T): boolean {
     return information_extractor.constructor === PhraseListExtractor;
   }
 
-  protected return_response<T extends BaseInformationExtractor>(
-    information_extractor: T
-  ): IResponseData {
+  protected return_response<T extends BaseInformationExtractor>(information_extractor: T): IResponseData {
     // FIXME: handle what happens on null case
-    const extracted_data: any =
-      information_extractor.get_extracted_data() as object;
+    const extracted_data: any = information_extractor.get_extracted_data() as object;
 
     if (extracted_data.score < LunchResponseCreator.REQUIRED_SCORE) {
       return {
         answer_message: {
           message:
-            LunchResponseCreator.UNDER_SCORE_ANSWERS[
-              Math.random() * LunchResponseCreator.UNDER_SCORE_ANSWERS.length
-            ],
+            LunchResponseCreator.UNDER_SCORE_ANSWERS[Math.random() * LunchResponseCreator.UNDER_SCORE_ANSWERS.length],
         },
       };
     } else {
       return {
         answer_message: {
-          message:
-            LunchResponseCreator.ANSWERS[
-              Math.floor(Math.random() * LunchResponseCreator.ANSWERS.length)
-            ],
+          message: LunchResponseCreator.ANSWERS[Math.floor(Math.random() * LunchResponseCreator.ANSWERS.length)],
         },
       };
     }
@@ -130,9 +103,7 @@ export class LunchResponseCreator extends BaseResponseCreator {
   public static fits_input(input_data: any): boolean {
     return (
       input_data?.prediction?.topIntent === LunchResponseCreator.INTENT &&
-      input_data?.prediction?.entities?.[LunchResponseCreator.DOMAIN]?.[0]?.[
-        LunchResponseCreator.ENTITY
-      ] !== undefined
+      input_data?.prediction?.entities?.[LunchResponseCreator.DOMAIN]?.[0]?.[LunchResponseCreator.ENTITY] !== undefined
     );
   }
 }
