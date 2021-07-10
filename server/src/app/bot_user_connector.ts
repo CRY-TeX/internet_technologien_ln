@@ -1,6 +1,7 @@
 import websocket from 'websocket';
 
 import Bot from '../bot/bot';
+import { IApiResponse } from '../bot/data_interfaces/api_response_data';
 
 export default class BotUserConnector {
   private ws_connection: websocket.connection;
@@ -15,7 +16,7 @@ export default class BotUserConnector {
         // TODO: give response to user that someting went wrong
         const json_msg_data = JSON.parse(message.utf8Data as string);
 
-        this.bot.get_response(json_msg_data.msg, (response: object) => {
+        this.bot.get_response(json_msg_data.msg, (response: IApiResponse | null) => {
           this.ws_connection.sendUTF(JSON.stringify(response));
         });
       } catch (error) {

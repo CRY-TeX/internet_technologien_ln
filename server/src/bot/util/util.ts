@@ -3,13 +3,21 @@
  * As long as the schema_obj is mappable to compare_obj it returns true, even if compare_obj
  * as additional data
  */
-export function compare_schema(schema_obj: object, compare_obj: object): boolean {
-  for (const prop in schema_obj) {
-    if (!compare_obj.hasOwnProperty(prop)) return false;
+export function matches_schema(schema: any, obj: any, ignore: string = '*'): boolean {
+  for (const el in schema) {
+    if (schema[el] instanceof Object) {
+      if (!matches_schema(schema[el], obj[el], ignore)) return false;
+    }
 
-    if ((schema_obj as any)[prop] instanceof Object) {
-      if (!compare_schema((schema_obj as any)[prop], (compare_obj as any)[prop])) return false;
-    } else if ((schema_obj as any)[prop] !== (compare_obj as any)[prop]) return false;
+    if (!(schema instanceof Array)) {
+      if (!obj.hasOwnProperty(el)) {
+        return false;
+      }
+    }
+
+    if (schema[el] === ignore) return true;
+
+    if (!(schema[el] instanceof Object) && schema[el] !== obj[el]) return false;
   }
   return true;
 }

@@ -1,7 +1,4 @@
 "use strict";
-// implement context into bot class
-// we need some way to construct the right interface for given question / intent
-// should responses be saved in array etc...
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -43,22 +40,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var node_fetch_1 = __importDefault(require("node-fetch"));
-var fs_1 = __importDefault(require("fs"));
-var path_1 = __importDefault(require("path"));
-var _a = require('./response/bot_response'), BotResponse = _a.BotResponse, BotResponseFactory = _a.BotResponseFactory;
+var bot_response_factory_1 = require("./bot_response_factory");
 var LUIS_ENDPONT = 'https://westeurope.api.cognitive.microsoft.com/luis/prediction/v3.0/apps/ecd8f1f0-f233-4a40-a035-ba44df647dfe/slots/staging/predict?subscription-key=1659ae301f684ea5b77dc144327fe0d2&verbose=true&show-all-intents=true&log=true&query=';
 var Bot = /** @class */ (function () {
     function Bot() {
-        // TODO: implement context
-        try {
-            var file_content = fs_1.default.readFileSync(path_1.default.join(path_1.default.dirname(__filename), '../../data/bot_response.json'));
-            this.res_data = JSON.parse(file_content);
-        }
-        catch (error) {
-            console.error(error);
-            this.res_data = null;
-            throw new Error('unable to read response file data');
-        }
     }
     // TODO: fix any later
     Bot.prototype.fetch_luis = function (msg) {
@@ -72,7 +57,7 @@ var Bot = /** @class */ (function () {
                     case 1:
                         res = _a.sent();
                         return [4 /*yield*/, res.json()];
-                    case 2: return [2 /*return*/, _a.sent()];
+                    case 2: return [2 /*return*/, (_a.sent())];
                     case 3:
                         error_1 = _a.sent();
                         console.error(error_1);
@@ -84,17 +69,19 @@ var Bot = /** @class */ (function () {
     };
     Bot.prototype.get_response = function (msg, callback) {
         return __awaiter(this, void 0, void 0, function () {
-            var luis_res, bot_response, error_2;
+            var luis_data, bot_response, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.fetch_luis(msg)];
                     case 1:
-                        luis_res = _a.sent();
-                        bot_response = BotResponseFactory.make_response(luis_res);
-                        bot_response.set_input_data(luis_res);
-                        bot_response.analyze_data();
+                        luis_data = _a.sent();
+                        if (luis_data === null)
+                            throw new Error('Could not fetch luis response');
+                        bot_response = bot_response_factory_1.BotResponseFactory.make_bot_response(luis_data);
+                        if (bot_response === null)
+                            throw new Error('Could not create bot response');
                         // pass response data to callback function
                         callback(bot_response.get_response_data());
                         return [3 /*break*/, 3];

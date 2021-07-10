@@ -1,9 +1,9 @@
 import { ILuisData } from './data_interfaces/luis_data';
-import { BaseBotResponse } from './bot_response';
+import { BaseBotResponse, LunchResponse } from './bot_response';
 
 export class BotResponseFactory {
-  public static readonly response_class_names: string[] = [];
   private static context: BaseBotResponse[] = [];
+  public static readonly response_class_names = [LunchResponse];
 
   public static make_bot_response(luis_data: ILuisData): BaseBotResponse | null {
     let bot_response: BaseBotResponse | null = null;
@@ -12,8 +12,9 @@ export class BotResponseFactory {
     for (const item of this.response_class_names) {
       try {
         // check if any reponse class fits the luis input data
-        bot_response = eval(`new ${item}`) as BaseBotResponse;
+        bot_response = new item(luis_data);
         if (bot_response.fits_input(luis_data)) break;
+        else bot_response = null;
       } catch (error) {
         console.error(error);
       }
