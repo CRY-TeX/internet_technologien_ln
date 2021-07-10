@@ -7,9 +7,9 @@ export function compare_schema(schema_obj: object, compare_obj: object): boolean
   for (const prop in schema_obj) {
     if (!compare_obj.hasOwnProperty(prop)) return false;
 
-    if (schema_obj[prop] instanceof Object) {
-      if (!compare_schema(schema_obj[prop], compare_obj[prop])) return false;
-    } else if (schema_obj[prop] !== compare_obj[prop]) return false;
+    if ((schema_obj as any)[prop] instanceof Object) {
+      if (!compare_schema((schema_obj as any)[prop], (compare_obj as any)[prop])) return false;
+    } else if ((schema_obj as any)[prop] !== (compare_obj as any)[prop]) return false;
   }
   return true;
 }

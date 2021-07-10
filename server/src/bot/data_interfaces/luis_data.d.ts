@@ -1,6 +1,6 @@
 type Entities = object;
 
-export interface ILuisResponse {
+export interface ILuisData {
   query: string;
   prediction: IPrediction;
 }
