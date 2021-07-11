@@ -11,6 +11,12 @@ const LUIS_ENDPONT =
 type BotResponseHandler = (response: IApiResponse | null) => void;
 
 export default class Bot {
+  private bot_response_factory: BotResponseFactory;
+
+  public constructor() {
+    this.bot_response_factory = new BotResponseFactory();
+  }
+
   // TODO: fix any later
   private async fetch_luis(msg: string): Promise<ILuisData | null> {
     try {
@@ -29,7 +35,7 @@ export default class Bot {
       const luis_data: ILuisData | null = await this.fetch_luis(msg);
       if (luis_data === null) throw new Error('Could not fetch luis response');
 
-      const bot_response: BaseBotResponse | null = BotResponseFactory.make_bot_response(luis_data);
+      const bot_response: BaseBotResponse | null = this.bot_response_factory.make_bot_response(luis_data);
       if (bot_response === null) throw new Error('Could not create bot response');
 
       // pass response data to callback function

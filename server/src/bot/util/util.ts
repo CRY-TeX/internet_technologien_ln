@@ -6,6 +6,7 @@
 export function matches_schema(schema: any, obj: any, ignore: string = '*'): boolean {
   for (const el in schema) {
     if (schema[el] instanceof Object) {
+      if (!(obj instanceof Object)) return false;
       if (!matches_schema(schema[el], obj[el], ignore)) return false;
     }
 

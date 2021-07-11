@@ -7,9 +7,11 @@ export abstract class BaseBotResponse {
 
   protected luis_data: ILuisData;
   protected response_data: IApiResponse | null;
+  protected context: BaseBotResponse[];
 
-  public constructor(luis_data: ILuisData) {
+  public constructor(luis_data: ILuisData, context: BaseBotResponse[]) {
     this.luis_data = luis_data;
+    this.context = context;
     this.response_data = null;
   }
 
@@ -25,11 +27,41 @@ export abstract class BaseBotResponse {
   public abstract analyze_data(): void;
 }
 
-export class LunchResponse extends BaseBotResponse {
+export class NoneBotResponse extends BaseBotResponse {
+  SCHEMA: ILuisData;
+
+  public constructor(luis_data: ILuisData, context: BaseBotResponse[]) {
+    super(luis_data, context);
+
+    this.SCHEMA = {
+      prediction: {
+        topIntent: 'None',
+      },
+    };
+  }
+
+  public analyze_data(): void {
+    if (this.context[this.context.length - 1] instanceof LunchBotResponse) {
+      this.response_data = {
+        answer_message: {
+          message: 'Welche Art von Mittagessen wollen Sie zubereiten?',
+        },
+      };
+    } else {
+      this.response_data = {
+        answer_message: {
+          message: 'Ich konnte sie nicht richtig verstehen. Können Sie das bitte wiederholen?',
+        },
+      };
+    }
+  }
+}
+
+export class LunchBotResponse extends BaseBotResponse {
   public readonly SCHEMA: ILuisData;
 
-  public constructor(luis_data: ILuisData) {
-    super(luis_data);
+  public constructor(luis_data: ILuisData, context: BaseBotResponse[]) {
+    super(luis_data, context);
 
     this.SCHEMA = {
       prediction: {
