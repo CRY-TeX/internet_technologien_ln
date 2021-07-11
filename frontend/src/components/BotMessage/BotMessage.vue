@@ -3,7 +3,7 @@
   <TextMessage v-else :is_user="false" :msg="msg" />
 </template>
 
-<script lang="ts">
+<script>
   import TextMessage from '../TextMessage.vue';
   import MealCard from './MealCard.vue';
 
