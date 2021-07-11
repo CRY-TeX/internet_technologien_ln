@@ -11,6 +11,12 @@ export default class BotUserConnector {
     this.ws_connection = ws_connection;
     this.bot = new Bot();
 
+    try {
+      this.ws_connection.sendUTF(JSON.stringify(this.bot.get_inital()));
+    } catch (error) {
+      console.error(error);
+    }
+
     this.ws_connection.on('message', (message: websocket.IMessage) => {
       try {
         // TODO: give response to user that someting went wrong

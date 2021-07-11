@@ -23,11 +23,11 @@ export class BotResponseFactory {
     // no reponse was found
     if (bot_response === null) return null;
 
-    // add to context
-    this.context.push(bot_response);
-
     // analyze data
     bot_response.analyze_data();
+
+    // add to context
+    this.context.push(bot_response);
     return bot_response;
   }
 }

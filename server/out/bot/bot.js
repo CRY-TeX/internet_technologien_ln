@@ -46,6 +46,13 @@ var Bot = /** @class */ (function () {
     function Bot() {
         this.bot_response_factory = new bot_response_factory_1.BotResponseFactory();
     }
+    Bot.prototype.get_inital = function () {
+        return {
+            answer_message: {
+                message: 'This is the inital message',
+            },
+        };
+    };
     // TODO: fix any later
     Bot.prototype.fetch_luis = function (msg) {
         return __awaiter(this, void 0, void 0, function () {

@@ -2,7 +2,7 @@ type UrlString = string;
 type ImageUrlString = UrlString;
 
 interface IAnswerMessage {
-  message: string;
+  msg: string;
   preview_url?: ImageUrlString;
 }
 

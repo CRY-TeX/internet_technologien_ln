@@ -17,6 +17,14 @@ export default class Bot {
     this.bot_response_factory = new BotResponseFactory();
   }
 
+  public get_inital(): IApiResponse {
+    return {
+      answer_message: {
+        msg: 'This is the inital message',
+      },
+    };
+  }
+
   // TODO: fix any later
   private async fetch_luis(msg: string): Promise<ILuisData | null> {
     try {

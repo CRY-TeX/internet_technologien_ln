@@ -41,16 +41,18 @@ export class NoneBotResponse extends BaseBotResponse {
   }
 
   public analyze_data(): void {
-    if (this.context[this.context.length - 1] instanceof LunchBotResponse) {
+    const last_context_item: BaseBotResponse | undefined = this.context[this.context.length - 1];
+
+    if (last_context_item instanceof LunchBotResponse) {
       this.response_data = {
         answer_message: {
-          message: 'Welche Art von Mittagessen wollen Sie zubereiten?',
+          msg: 'Welche Art von Mittagessen wollen Sie zubereiten?',
         },
       };
     } else {
       this.response_data = {
         answer_message: {
-          message: 'Ich konnte sie nicht richtig verstehen. Können Sie das bitte wiederholen?',
+          msg: 'Ich konnte sie nicht richtig verstehen. Können Sie das bitte wiederholen?',
         },
       };
     }
@@ -80,7 +82,7 @@ export class LunchBotResponse extends BaseBotResponse {
   public analyze_data(): void {
     this.response_data = {
       answer_message: {
-        message: 'Was für ein Mittagessen wollen Sie denn kochen?',
+        msg: 'Was für ein Mittagessen wollen Sie denn kochen?',
       },
     };
   }
