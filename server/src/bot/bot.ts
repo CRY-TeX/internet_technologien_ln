@@ -1,7 +1,7 @@
 import fetch, { Response as FetchResponse } from 'node-fetch';
 
-import { IApiResponse } from './data_interfaces/api_response_data';
-import { ILuisData } from './data_interfaces/luis_data';
+import { IApiResponse } from '../types/api_response_data.interface';
+import { ILuisData } from '../types/luis_data.interface';
 import { BotResponseFactory } from './bot_response_factory';
 import { BaseBotResponse } from './bot_response';
 

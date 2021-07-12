@@ -1,5 +1,5 @@
-import { IApiResponse } from './data_interfaces/api_response_data';
-import { ILuisData } from './data_interfaces/luis_data';
+import { IApiResponse } from '../types/api_response_data.interface';
+import { ILuisData } from '../types/luis_data.interface';
 import { matches_schema } from './util/util';
 
 export abstract class BaseBotResponse {

@@ -1,7 +1,7 @@
 import websocket from 'websocket';
 
 import Bot from '../bot/bot';
-import { IApiResponse } from '../bot/data_interfaces/api_response_data';
+import { IApiResponse } from '../types/api_response_data.interface';
 
 export default class BotUserConnector {
   private ws_connection: websocket.connection;

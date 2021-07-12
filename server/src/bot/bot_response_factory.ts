@@ -1,4 +1,4 @@
-import { ILuisData } from './data_interfaces/luis_data';
+import { ILuisData } from '../types/luis_data.interface';
 import { BaseBotResponse, LunchBotResponse, NoneBotResponse } from './bot_response';
 
 export class BotResponseFactory {
