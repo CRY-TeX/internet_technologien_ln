@@ -9,6 +9,8 @@
   import TextMessage from '../TextMessage.vue';
   import MealCard from './MealCard.vue';
 
+  import { IAnswerMessage } from '@/types/api_response_data.interface';
+
   export default defineComponent({
     name: 'UserMessage',
     components: {
@@ -17,7 +19,7 @@
     },
     props: {
       msg: {
-        type: Object as PropType<{ preview_url: string }>,
+        type: Object as PropType<IAnswerMessage>,
         required: true,
       },
     },

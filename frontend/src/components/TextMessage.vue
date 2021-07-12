@@ -1,15 +1,17 @@
 <template>
-  <p :class="is_user ? 'msg-user' : 'msg-bot'">{{ msg.msg }}</p>
+  <p :class="is_user ? 'msg-user' : 'msg-bot'">{{ msg }}</p>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
+  export default defineComponent({
     name: 'UserMessage',
     props: {
-      msg: Object,
-      is_user: Boolean,
+      msg: { type: String, required: true },
+      is_user: { type: Boolean, required: true },
     },
-  };
+  });
 </script>
 
 <style scoped>

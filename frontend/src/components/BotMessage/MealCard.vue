@@ -12,21 +12,28 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent, PropType } from 'vue';
+
   import router from '../../router';
 
+  import { IMealItem } from '@/types/api_response_data.interface';
+
   // TODO: rename component
-  export default {
+  export default defineComponent({
     name: 'AnswerCard',
     props: {
-      msg: Object,
+      msg: {
+        type: Object as PropType<IMealItem>,
+        required: true,
+      },
     },
     methods: {
       show_meals() {
         router.push({ name: 'meals' });
       },
     },
-  };
+  });
 </script>
 
 <style scoped>

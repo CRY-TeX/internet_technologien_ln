@@ -4,26 +4,31 @@
   </button>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
+  import { IUserMessage } from '@/types/user_message.interface';
+
+  export default defineComponent({
     name: 'Suggestion',
     props: {
       msg: {
         type: String,
-        default: '#EMPTY#',
+        required: true,
       },
     },
     methods: {
-      send_suggestion: function() {
-        this.$store.state.socket.send(
-          JSON.stringify({
-            msg: this.msg,
-          })
-        );
-        this.$store.commit('spin');
+      send_suggestion: function(): void {
+        try {
+          const message: IUserMessage = { msg: this.msg };
+          this.$store.commit('send_msg', message);
+          this.$store.commit('spin');
+        } catch (error) {
+          console.error(error);
+        }
       },
     },
-  };
+  });
 </script>
 
 <style scoped>

@@ -8,21 +8,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
   import router from '../router';
 
-  export default {
+  export default defineComponent({
     name: 'PageBar',
     props: {
-      page_name: String,
+      page_name: {
+        type: String,
+        required: true,
+      },
     },
     methods: {
-      close() {
+      close(): void {
         // router.push({ name: "home" });
         router.go(-1);
       },
     },
-  };
+  });
 </script>
 
 <style scoped>

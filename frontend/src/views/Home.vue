@@ -1,18 +1,54 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div>
+    <Titlebar />
+    <Spinner />
+    <h2 class="user-question">Ich möchte ein Mittagessen kochen</h2>
+    <div class="answer-container">
+      <AnswerCard />
+    </div>
+    <SuggestionList />
+    <MessageInput />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+  import { defineComponent } from 'vue';
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
-});
+  import Titlebar from '../components/Titlebar.vue';
+  import Spinner from '../components/Spinner.vue';
+  import AnswerCard from '../components/AnswerCard.vue';
+  import MessageInput from '../components/MessageInput.vue';
+  import SuggestionList from '../components/SuggestionList.vue';
+
+  export default defineComponent({
+    name: 'Home',
+    components: {
+      Titlebar,
+      Spinner,
+      AnswerCard,
+      MessageInput,
+      SuggestionList,
+    },
+  });
 </script>
+
+<style scoped>
+  .user-question {
+    font-size: 1em;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .answer-container {
+    min-height: 50vh;
+    background-image: url('../assets/dark_oak.png');
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05));
+    border-radius: 0px 0px 15px 15px;
+    padding: 1.8em;
+    margin-bottom: 2rem;
+    /* opacity: 0.75; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

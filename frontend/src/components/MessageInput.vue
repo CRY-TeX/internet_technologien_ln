@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="message"
-    :style="{ 'border-color': send_confirmed ? '#8ac734' : '#666666' }"
-  >
+  <div class="message" :style="{ borderColor: send_confirmed ? '#8ac734' : '#666666' }">
     <input
       type="text"
       name="message"
@@ -16,24 +13,26 @@
   </div>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
+  import { IUserMessage } from '@/types/user_message.interface';
+
+  export default defineComponent({
     name: 'MessageInput',
     data: function() {
       return {
-        message: '',
-        send_confirmed: false,
+        message: '' as string,
+        send_confirmed: false as boolean,
       };
     },
     methods: {
-      send_msg: function() {
+      send_msg: function(): void {
         if (this.message === '') return;
 
-        this.$store.state.socket.send(
-          JSON.stringify({
-            msg: this.message,
-          })
-        );
+        const message: IUserMessage = { msg: this.message };
+
+        this.$store.commit('send_msg', message);
         this.send_confirmed = true;
 
         setTimeout(() => {
@@ -42,7 +41,7 @@
         this.$store.commit('spin');
       },
     },
-  };
+  });
 </script>
 
 <style scoped>

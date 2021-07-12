@@ -2,19 +2,21 @@
   <div class="container">
     <PageBar page_name="Chat" />
 
-    <div class="msg-box" v-for="item in get_conversation" :key="item.index">
-      <TextMessage class="user-msg" :is_user="true" :msg="item.msg" />
-      <BotMessage class="bot-msg" :msg="item.response" />
+    <div class="msg-box" v-for="item in get_conversation" :key="item.id">
+      <TextMessage class="user-msg" :is_user="true" :msg="item.query" />
+      <BotMessage class="bot-msg" :msg="item" />
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
   import PageBar from '../components/PageBar.vue';
   import TextMessage from '../components/TextMessage.vue';
   import BotMessage from '../components/BotMessage/BotMessage.vue';
 
-  export default {
+  export default defineComponent({
     name: 'EntireChat',
     components: {
       PageBar,
@@ -23,10 +25,10 @@
     },
     computed: {
       get_conversation: function() {
-        return this.$store.state.conversation;
+        return this.$store.state.api_responses;
       },
     },
-  };
+  });
 </script>
 
 <style scoped>

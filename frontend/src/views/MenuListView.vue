@@ -9,11 +9,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
   import PageBar from '../components/PageBar.vue';
   import MealCard from '../components/MealCard.vue';
 
-  export default {
+  import { IApiResponse } from '@/types/api_response_data.interface';
+
+  export default defineComponent({
     name: 'MenuListView',
     components: {
       PageBar,
@@ -21,10 +25,14 @@
     },
     computed: {
       meal_list: function() {
-        return this.$store.state.meals;
+        const last_api_response: IApiResponse | undefined = this.$store.state.api_responses[
+          this.$store.state.api_responses.length - 1
+        ];
+
+        return last_api_response?.meal_list === undefined ? [] : last_api_response.meal_list;
       },
     },
-  };
+  });
 </script>
 
 <style scoped>

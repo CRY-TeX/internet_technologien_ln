@@ -2,22 +2,15 @@
   <router-view />
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  import { IApiResponse } from '@/types/api_response_data.interface';
+
+  export default defineComponent({
     name: 'App',
 
-    created: function() {
+    created: function(): void {
       this.$store.state.socket = new WebSocket('ws://localhost:3000');
-
-      this.$store.state.socket.onopen = (event) => {
-        console.log('WebSocket successfully connected');
-        console.log(event);
-        this.$store.state.socket.send(
-          JSON.stringify({
-            msg: 'initial',
-          })
-        );
-      };
 
       // TODO: define on close event
 
@@ -25,20 +18,14 @@
         console.log(data);
 
         try {
-          let json_data = JSON.parse(data);
-          this.$store.state.suggestions = json_data.suggestions;
-          this.$store.state.meals = json_data.meals;
-          this.$store.state.conversation.push({
-            index: this.$store.state.conversation.length,
-            msg: { msg: json_data.msg },
-            response: json_data.response,
-          });
+          let json_data: IApiResponse = JSON.parse(data);
+          this.$store.state.api_responses.push(json_data);
         } catch (error) {
           console.error(error);
         }
       };
     },
-  };
+  });
 </script>
 
 <style>

@@ -3,47 +3,40 @@
     <img :src="meal.preview_url" alt="Essens Vorschau" class="img-preview" />
 
     <h2 class="meal-name">
-      {{
-        meal.name.length >= 52 ? meal.name.substring(0, 49) + '...' : meal.name
-      }}
+      {{ meal.name.length >= 52 ? meal.name.substring(0, 49) + '...' : meal.name }}
     </h2>
 
     <p class="info">
-      <span
-        class="iconify"
-        data-inline="false"
-        data-icon="ant-design:clock-circle-outlined"
-      ></span>
+      <span class="iconify" data-inline="false" data-icon="ant-design:clock-circle-outlined"></span>
       <span class="descr">{{ meal.cooking_time }}</span>
     </p>
 
     <p class="info">
-      <span
-        class="iconify"
-        data-inline="false"
-        data-icon="fluent:top-speed-20-regular"
-      ></span>
+      <span class="iconify" data-inline="false" data-icon="fluent:top-speed-20-regular"></span>
       <span class="descr">{{ meal.difficulty }}</span>
     </p>
 
-    <p class="info" v-if="meal.calories != ''">
-      <span
-        class="iconify"
-        data-inline="false"
-        data-icon="fluent:food-16-filled"
-      ></span>
+    <!-- <p class="info" v-if="meal.calories != ''">
+      <span class="iconify" data-inline="false" data-icon="fluent:food-16-filled"></span>
       <span class="descr">{{ meal.calories }}</span>
-    </p>
+    </p> -->
   </a>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import { defineComponent, PropType } from 'vue';
+
+  import { IMealItem } from '@/types/api_response_data.interface';
+
+  export default defineComponent({
     name: 'MealCard',
     props: {
-      meal: Object,
+      meal: {
+        type: Object as PropType<IMealItem>,
+        required: true,
+      },
     },
-  };
+  });
 </script>
 
 <style scoped>

@@ -2,52 +2,43 @@
   <div class="card" @click.self="show_chat()">
     <img
       class="preview"
-      :src="last_response.preview_url"
+      :src="last_response.answer_message.preview_url"
       alt="Gericht Preview"
-      v-if="last_response.preview_url !== ''"
+      v-if="last_response.answer_message.preview_url !== ''"
     />
 
-    <button
-      class="btn"
-      @click="show_meals()"
-      v-if="last_response.has_meal_list === true"
-    >
+    <button class="btn" @click="show_meals()" v-if="last_response?.meal_list !== undefined">
       Alle Gerichte
     </button>
 
     <p class="answer">
-      {{ last_response.msg }}
+      {{ last_response.answer_message.msg }}
     </p>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue';
   import router from '../router';
 
-  export default {
+  import { IApiResponse } from '@/types/api_response_data.interface';
+
+  export default defineComponent({
     name: 'AnswerCard',
     methods: {
-      show_chat() {
+      show_chat(): void {
         router.push({ name: 'chat' });
       },
-      show_meals() {
+      show_meals(): void {
         router.push({ name: 'meals' });
       },
     },
     computed: {
-      last_response: function() {
-        return this.$store.state.conversation.length === 0
-          ? {
-              has_meal_list: false,
-              msg: 'Stellen sie mir eine Frage',
-              preview_url: '',
-            }
-          : this.$store.state.conversation[
-              this.$store.state.conversation.length - 1
-            ].response;
+      last_response(): IApiResponse {
+        return this.$store.getters.last_api_response;
       },
     },
-  };
+  });
 </script>
 
 <style scoped>

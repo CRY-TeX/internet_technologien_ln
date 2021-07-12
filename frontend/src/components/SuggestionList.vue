@@ -1,29 +1,29 @@
 <template>
   <ul class="suggestion-list">
-    <li
-      v-for="suggestion in suggestions"
-      :key="suggestion.link"
-      class="suggestion-item"
-    >
+    <li v-for="suggestion in suggestions" :key="suggestion" class="suggestion-item">
       <Suggestion :msg="suggestion" />
     </li>
   </ul>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
   import Suggestion from './Suggestion.vue';
 
-  export default {
+  export default defineComponent({
     name: 'SuggestionList',
     components: {
       Suggestion,
     },
     computed: {
       suggestions: function() {
-        return this.$store.state.suggestions;
+        const store_suggestions: string[] | undefined = this.$store.getters.last_api_response?.suggestions;
+
+        return store_suggestions === undefined ? [] : store_suggestions;
       },
     },
-  };
+  });
 </script>
 
 <style scoped>

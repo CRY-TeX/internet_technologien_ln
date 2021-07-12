@@ -1,26 +1,23 @@
 <template>
   <div class="wrapper">
     <canvas id="webgl" v-if="webgl_available"></canvas>
-    <img
-      class="spinner"
-      v-else
-      src="../assets/unsure_cook_icon.png"
-      alt="spinner"
-    />
+    <img class="spinner" v-else src="../assets/unsure_cook_icon.png" alt="spinner" />
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue';
+
   // TODO: implement three.js animation in here
   import * as THREE from 'three';
   import { WEBGL } from 'three/examples/jsm/WebGL';
 
-  let renderer = null;
-  let scene = null;
-  let camera = null;
-  let diamond = null;
+  let renderer: THREE.WebGLRenderer | null = null;
+  let scene: THREE.Scene | null = null;
+  let camera: THREE.PerspectiveCamera | null = null;
+  let diamond: THREE.Mesh | null = null;
 
-  export default {
+  export default defineComponent({
     name: 'Spinner',
     data: function() {
       return {
@@ -28,37 +25,34 @@
       };
     },
 
-    created: function() {
+    created: function(): void {
       this.webgl_available = WEBGL.isWebGLAvailable();
       // this.webgl_available = false;
     },
-    mounted: function() {
+    mounted: function(): void {
       this.init();
       this.animate();
     },
 
     methods: {
-      add_light: function(x, y, z, strength = 1) {
+      add_light: function(x: number, y: number, z: number, strength: number = 1): void {
+        if (scene === null) return;
+
         let point_light = new THREE.PointLight(0xfff, strength);
         point_light.position.set(x, y, z);
         scene.add(point_light);
       },
-      init: function() {
+      init: function(): void {
         if (this.webgl_available) {
           scene = new THREE.Scene();
 
-          camera = new THREE.PerspectiveCamera(
-            75,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1000
-          );
+          camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
           camera.position.z = 1.5;
           camera.position.y = 0.2;
 
           renderer = new THREE.WebGLRenderer({
-            canvas: document.getElementById('webgl'),
-            alpha: 1,
+            canvas: document.getElementById('webgl') as HTMLCanvasElement,
+            alpha: true,
           });
           renderer.setClearColor(0xfff, 0);
           renderer.setPixelRatio(window.devicePixelRatio);
@@ -66,7 +60,7 @@
           const geometry = new THREE.OctahedronGeometry(1, 0);
           const material = new THREE.MeshStandardMaterial({
             color: 0x0aff00,
-            shading: THREE.FlatShading,
+            // shading: THREE.FlatShading,
             side: THREE.DoubleSide,
             // vertexColors: THREE.FaceColors,
             // overdraw: true,
@@ -81,20 +75,20 @@
           renderer.render(scene, camera);
         }
       },
-      animate: function() {
+      animate: function(): void {
         requestAnimationFrame(this.animate);
 
         if (diamond && this.should_spin) diamond.rotation.y += 0.013;
 
-        if (renderer) renderer.render(scene, camera);
+        if (renderer && scene && camera) renderer.render(scene, camera);
       },
     },
     computed: {
-      should_spin: function() {
+      should_spin: function(): boolean {
         return this.$store.state.spin;
       },
     },
-  };
+  });
 </script>
 
 <style scoped>
