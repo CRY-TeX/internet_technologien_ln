@@ -4,7 +4,7 @@
 
     <div class="msg-box" v-for="item in get_conversation" :key="item.id">
       <TextMessage class="user-msg" :is_user="true" :msg="item.query" />
-      <BotMessage class="bot-msg" :msg="item" />
+      <BotMessage class="bot-msg" :api_response="item" />
     </div>
   </div>
 </template>

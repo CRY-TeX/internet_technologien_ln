@@ -1,13 +1,13 @@
 <template>
   <div class="card">
-    <img class="preview" :src="msg.preview_url" alt="Gericht Preview" />
+    <img class="preview" :src="api_response.answer_message.preview_url" alt="Gericht Preview" />
 
-    <button class="btn" @click="show_meals()" v-if="msg.has_meal_list">
+    <button class="btn" @click="show_meals()" v-if="api_response?.meal_list !== undefined">
       Alle Gerichte
     </button>
 
     <p class="answer">
-      {{ msg.msg }}
+      {{ api_response.answer_message.msg }}
     </p>
   </div>
 </template>
@@ -17,14 +17,14 @@
 
   import router from '../../router';
 
-  import { IMealItem } from '@/types/api_response_data.interface';
+  import { IApiResponse } from '@/types/api_response_data.interface';
 
   // TODO: rename component
   export default defineComponent({
     name: 'AnswerCard',
     props: {
-      msg: {
-        type: Object as PropType<IMealItem>,
+      api_response: {
+        type: Object as PropType<IApiResponse>,
         required: true,
       },
     },

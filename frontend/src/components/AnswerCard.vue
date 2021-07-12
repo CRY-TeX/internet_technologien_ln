@@ -2,9 +2,9 @@
   <div class="card" @click.self="show_chat()">
     <img
       class="preview"
-      :src="last_response.answer_message.preview_url"
+      :src="last_response?.answer_message?.preview_url"
       alt="Gericht Preview"
-      v-if="last_response.answer_message.preview_url !== ''"
+      v-if="last_response?.answer_message?.preview_url !== ''"
     />
 
     <button class="btn" @click="show_meals()" v-if="last_response?.meal_list !== undefined">
@@ -12,7 +12,7 @@
     </button>
 
     <p class="answer">
-      {{ last_response.answer_message.msg }}
+      {{ last_response?.answer_message?.msg }}
     </p>
   </div>
 </template>
