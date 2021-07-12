@@ -19,6 +19,8 @@ export default class Bot {
 
   public get_inital(): IApiResponse {
     return {
+      id: 0,
+      query: '',
       answer_message: {
         msg: 'This is the inital message',
       },

@@ -29,6 +29,13 @@
       MessageInput,
       SuggestionList,
     },
+    computed: {
+      last_query(): string {
+        const last_query: string | undefined = this.$store.getters.last_api_response?.query;
+
+        return last_query === undefined ? 'Stellen Sie eine Frage' : last_query;
+      },
+    },
   });
 </script>
 

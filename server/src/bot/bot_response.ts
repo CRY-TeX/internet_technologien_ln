@@ -3,6 +3,7 @@ import { ILuisData } from '../types/luis_data.interface';
 import { matches_schema } from './util/util';
 
 export abstract class BaseBotResponse {
+  private static ID: number = 0;
   abstract readonly SCHEMA: ILuisData;
 
   protected luis_data: ILuisData;
@@ -21,6 +22,17 @@ export abstract class BaseBotResponse {
 
   public fits_input(luis_data: ILuisData) {
     return matches_schema(this.SCHEMA, luis_data);
+  }
+
+  protected response_boilerplate(): { id: number; query: string } {
+    BaseBotResponse.ID++;
+    return {
+      id: BaseBotResponse.ID,
+      query:
+        this.luis_data.query === undefined
+          ? 'Upps, etwas ist schiefgelaufen... Keine Nachricht gefunden'
+          : this.luis_data.query,
+    };
   }
 
   // ABSTRACT METHODS
@@ -45,12 +57,14 @@ export class NoneBotResponse extends BaseBotResponse {
 
     if (last_context_item instanceof LunchBotResponse) {
       this.response_data = {
+        ...this.response_boilerplate(),
         answer_message: {
           msg: 'Welche Art von Mittagessen wollen Sie zubereiten?',
         },
       };
     } else {
       this.response_data = {
+        ...this.response_boilerplate(),
         answer_message: {
           msg: 'Ich konnte sie nicht richtig verstehen. Können Sie das bitte wiederholen?',
         },
@@ -81,6 +95,7 @@ export class LunchBotResponse extends BaseBotResponse {
 
   public analyze_data(): void {
     this.response_data = {
+      ...this.response_boilerplate(),
       answer_message: {
         msg: 'Was für ein Mittagessen wollen Sie denn kochen?',
       },
