@@ -2,7 +2,7 @@
   <div>
     <Titlebar />
     <Spinner />
-    <h2 class="user-question">Ich möchte ein Mittagessen kochen</h2>
+    <h2 class="user-question">{{ last_query }}</h2>
     <div class="answer-container">
       <AnswerCard />
     </div>
@@ -33,7 +33,7 @@
       last_query(): string {
         const last_query: string | undefined = this.$store.getters.last_api_response?.query;
 
-        return last_query === undefined ? 'Stellen Sie eine Frage' : last_query;
+        return last_query === undefined || last_query === '' ? 'Stellen Sie eine Frage' : last_query;
       },
     },
   });

@@ -1,0 +1,15 @@
+# CHEFKOCH ACTIONS #
+
+SICHER:
+- Zufälliges Rezept
+- [Region] Rezept (z.B. afrikanisches Essen)
+- Frühstück, Mittag, Abendessen
+- Typ: Backen, Kochen
+- Rezeptname bei allem
+- Schwierigkeit
+
+=> Bei Kategorien soll gefragt und vorgeschlagen werden weitere Verfeinerungen
+zu machen oder mit den Kategorien zu suchen
+
+VIELLEICHT:
+- Rezepte des Tages

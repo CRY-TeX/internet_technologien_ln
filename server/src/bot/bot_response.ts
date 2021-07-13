@@ -1,6 +1,6 @@
 import { IApiResponse } from '../types/api_response_data.interface';
 import { ILuisData } from '../types/luis_data.interface';
-import { matches_schema } from './util/util';
+import { matches_schema } from '../util/util';
 
 export abstract class BaseBotResponse {
   private static ID: number = 0;

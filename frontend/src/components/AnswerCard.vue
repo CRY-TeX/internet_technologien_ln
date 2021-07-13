@@ -4,7 +4,7 @@
       class="preview"
       :src="last_response?.answer_message?.preview_url"
       alt="Gericht Preview"
-      v-if="last_response?.answer_message?.preview_url !== ''"
+      v-if="last_response?.answer_message?.preview_url !== undefined"
     />
 
     <button class="btn" @click="show_meals()" v-if="last_response?.meal_list !== undefined">
