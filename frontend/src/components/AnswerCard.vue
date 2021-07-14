@@ -1,16 +1,13 @@
 <template>
   <div class="card" @click.self="show_chat()">
-    <img
-      class="preview"
-      :src="last_response?.answer_message?.preview_url"
-      alt="Gericht Preview"
-      v-if="last_response?.answer_message?.preview_url !== undefined"
+    <MealAnswerCard
+      v-if="last_response?.answer_message?.meal_item !== undefined"
+      :meal_item="last_response.answer_message.meal_item"
     />
 
     <button class="btn" @click="show_meals()" v-if="last_response?.meal_list !== undefined">
       Alle Gerichte
     </button>
-
     <p class="answer">
       {{ last_response?.answer_message?.msg }}
     </p>
@@ -20,11 +17,15 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import router from '../router';
+  import MealAnswerCard from './MealAnswerCard.vue';
 
   import { IApiResponse } from '@/types/api_response_data.interface';
 
   export default defineComponent({
     name: 'AnswerCard',
+    components: {
+      MealAnswerCard,
+    },
     methods: {
       show_chat(): void {
         router.push({ name: 'chat' });
@@ -56,14 +57,6 @@
   .card:hover {
     background-color: #f5f5f5;
     cursor: pointer;
-  }
-
-  .preview {
-    width: 80%;
-    margin: 0 auto 1em auto;
-    display: block;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05));
-    border-radius: 10px;
   }
 
   .btn {

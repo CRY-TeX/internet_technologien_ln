@@ -22,7 +22,7 @@
         try {
           const message: IUserMessage = { msg: this.msg };
           this.$store.commit('send_msg', message);
-          this.$store.commit('spin');
+          this.$store.state.spin = true;
         } catch (error) {
           console.error(error);
         }

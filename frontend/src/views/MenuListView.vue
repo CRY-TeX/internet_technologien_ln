@@ -13,7 +13,7 @@
   import { defineComponent } from 'vue';
 
   import PageBar from '../components/PageBar.vue';
-  import MealCard from '../components/MealCard.vue';
+  import MealCard from '../components/MealListCard.vue';
 
   import { IApiResponse } from '@/types/api_response_data.interface';
 

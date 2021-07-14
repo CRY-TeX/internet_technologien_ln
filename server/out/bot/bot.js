@@ -41,15 +41,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var node_fetch_1 = __importDefault(require("node-fetch"));
 var bot_response_factory_1 = require("./bot_response_factory");
-var LUIS_ENDPONT = 'https://westeurope.api.cognitive.microsoft.com/luis/prediction/v3.0/apps/ecd8f1f0-f233-4a40-a035-ba44df647dfe/slots/staging/predict?subscription-key=1659ae301f684ea5b77dc144327fe0d2&verbose=true&show-all-intents=true&log=true&query=';
 var Bot = /** @class */ (function () {
     function Bot() {
         this.bot_response_factory = new bot_response_factory_1.BotResponseFactory();
     }
     Bot.prototype.get_inital = function () {
         return {
+            id: 0,
+            query: '',
             answer_message: {
-                message: 'This is the inital message',
+                msg: 'This is the inital message',
             },
         };
     };
@@ -61,7 +62,7 @@ var Bot = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, node_fetch_1.default("" + LUIS_ENDPONT + msg)];
+                        return [4 /*yield*/, node_fetch_1.default("" + Bot.LUIS_ENDPONT + msg)];
                     case 1:
                         res = _a.sent();
                         return [4 /*yield*/, res.json()];
@@ -81,27 +82,30 @@ var Bot = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 3, , 4]);
                         return [4 /*yield*/, this.fetch_luis(msg)];
                     case 1:
                         luis_data = _a.sent();
                         if (luis_data === null)
                             throw new Error('Could not fetch luis response');
-                        bot_response = this.bot_response_factory.make_bot_response(luis_data);
+                        return [4 /*yield*/, this.bot_response_factory.make_bot_response(luis_data)];
+                    case 2:
+                        bot_response = _a.sent();
                         if (bot_response === null)
                             throw new Error('Could not create bot response');
                         // pass response data to callback function
                         callback(bot_response.get_response_data());
-                        return [3 /*break*/, 3];
-                    case 2:
+                        return [3 /*break*/, 4];
+                    case 3:
                         error_2 = _a.sent();
                         console.error(error_2);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
+    Bot.LUIS_ENDPONT = 'https://westeurope.api.cognitive.microsoft.com/luis/prediction/v3.0/apps/ecd8f1f0-f233-4a40-a035-ba44df647dfe/slots/staging/predict?subscription-key=1659ae301f684ea5b77dc144327fe0d2&verbose=true&show-all-intents=true&log=true&query=';
     return Bot;
 }());
 exports.default = Bot;

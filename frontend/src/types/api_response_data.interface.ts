@@ -3,7 +3,7 @@ export type ImageUrlString = UrlString;
 
 export interface IAnswerMessage {
   msg: string;
-  preview_url?: ImageUrlString;
+  meal_item?: IMealItem;
 }
 
 export interface IMealItem {

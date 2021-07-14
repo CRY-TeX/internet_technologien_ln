@@ -38,7 +38,7 @@
         setTimeout(() => {
           this.send_confirmed = false;
         }, 700);
-        this.$store.commit('spin');
+        this.$store.state.spin = true;
       },
     },
   });
@@ -53,6 +53,7 @@
     width: 90%;
     max-width: 600px;
     margin: 0 auto;
+    margin-bottom: 3rem;
 
     display: flex;
     align-items: center;

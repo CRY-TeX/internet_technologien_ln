@@ -7,6 +7,7 @@ declare module '@vue/runtime-core' {
   // store states interface
   interface State {
     socket: WebSocket | null;
+    connected: boolean;
     api_responses: IApiResponse[];
     spin: boolean;
   }

@@ -26,7 +26,8 @@ function recipe_ok(obj: IMealItem): boolean {
 
 export async function recipe_of_the_day(meat_pref: MeatPref): Promise<IMealItem | null> {
   try {
-    const url: string = `https://www.chefkoch.de/rezept-des-tages/${meat_pref}`;
+    const base_url: string = 'https://www.chefkoch.de';
+    const url: string = `${base_url}/rezept-des-tages/${meat_pref}`;
     const res: FetchResponse = await fetch(url);
     const dom: jsdom.JSDOM = await new jsdom.JSDOM(await res.text());
     const doc = dom.window.document;
@@ -64,6 +65,8 @@ export async function recipe_of_the_day(meat_pref: MeatPref): Promise<IMealItem 
     };
 
     if (!recipe_ok(recipe)) throw new Error('Could not scrape all data');
+
+    recipe.link = `${base_url}${recipe.link}`;
 
     return recipe;
   } catch (error) {
@@ -134,9 +137,9 @@ export enum Duration {
 
 export function build_search_url(
   search_name: string,
-  difficulty: Difficulty = Difficulty.AND_HARD,
+  category: Category = { id: 's0', html_file: 'Rezepte.html' },
   duration: Duration = Duration.ALL,
-  category: Category = { id: 's0', html_file: 'Rezepte.html' }
+  difficulty: Difficulty = Difficulty.AND_HARD
 ): string {
   return `https://www.chefkoch.de/rs/${category.id}e1n1z1b0i1${duration}${difficulty}/${search_name
     .trim()

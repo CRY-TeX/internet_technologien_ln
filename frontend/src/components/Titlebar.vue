@@ -2,6 +2,7 @@
   <nav class="titlebar">
     <img class="icon" src="../assets/unsure_cook_icon.png" />
     <h1 class="app-name">The Unsure Cook</h1>
+    <p class="connection-state">Status: {{ get_connection_status ? 'Verbunden' : 'Keine Verbindung' }}</p>
   </nav>
 </template>
 
@@ -10,6 +11,11 @@
 
   export default defineComponent({
     name: 'Titlebar',
+    computed: {
+      get_connection_status(): boolean {
+        return this.$store.state.connected;
+      },
+    },
   });
 </script>
 
@@ -37,5 +43,11 @@
     text-align: center;
 
     color: #eaeaea;
+  }
+
+  .connection-state {
+    color: white;
+    font-size: 0.8em;
+    justify-self: end;
   }
 </style>
