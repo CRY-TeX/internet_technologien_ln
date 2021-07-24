@@ -6,7 +6,7 @@ Dieses Projekt ist im Rahmen einer Univeritätsarbeit entstanden. Es geht darum 
 Ich habe mich entschieden einen Bot zu bauen, der ein passendes Rezept vorschlägt, wenn z.B. ein Mittagessen
 zubereitet werden soll.
 
-## Build for Production
+## Production Version benutzen
 
 Um die Production Komponenten zu benutzen (also Website und Server) müssen folgende Schritte verfolgt werden:
 
