@@ -4,7 +4,7 @@
     <Spinner />
     <h2 class="user-question">{{ last_query }}</h2>
     <div class="answer-container">
-      <AnswerCard />
+      <AnswerCard :api_response="last_response" />
     </div>
     <SuggestionList />
     <MessageInput />
@@ -13,6 +13,7 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import { IApiResponse } from '@/types/api_response_data.interface';
 
   import Titlebar from '../components/Titlebar.vue';
   import Spinner from '../components/Spinner.vue';
@@ -34,6 +35,9 @@
         const last_query: string | undefined = this.$store.getters.last_api_response?.query;
 
         return last_query === undefined || last_query === '' ? 'Stellen Sie eine Frage' : last_query;
+      },
+      last_response(): IApiResponse {
+        return this.$store.getters.last_api_response;
       },
     },
   });

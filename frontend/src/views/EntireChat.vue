@@ -14,7 +14,7 @@
 
   import PageBar from '../components/PageBar.vue';
   import TextMessage from '../components/TextMessage.vue';
-  import BotMessage from '../components/BotMessage/BotMessage.vue';
+  import BotMessage from '../components/BotMessage.vue';
 
   export default defineComponent({
     name: 'EntireChat',

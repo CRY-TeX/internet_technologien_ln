@@ -14,11 +14,9 @@ var App = /** @class */ (function () {
      *
      * creates an http server that hosts an express app and a websocket server
      */
-    function App(host_name, port, debug) {
-        if (debug === void 0) { debug = false; }
+    function App(host_name, port) {
         this.host_name = host_name;
         this.port = port;
-        this.debug = debug;
         this.express_app = express_1.default();
         this.http_server = http_1.default.createServer(this.express_app);
         this.ws_server = new websocket_1.default.server({
@@ -32,8 +30,7 @@ var App = /** @class */ (function () {
      */
     App.prototype.start = function () {
         var _this = this;
-        if (!this.debug)
-            this.set_express_app_routes();
+        this.set_express_app_routes();
         this.set_websocket_events();
         this.http_server.listen(this.port, this.host_name, function () {
             console.log("Server started: " + _this.http_url);

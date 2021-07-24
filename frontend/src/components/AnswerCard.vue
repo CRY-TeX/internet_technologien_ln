@@ -1,21 +1,21 @@
 <template>
-  <div class="card" @click.self="show_chat()">
+  <div class="card" @click.self="show_chat()" :style="{ fontSize: is_chat_view ? '0.8em' : '1em' }">
     <MealAnswerCard
-      v-if="last_response?.answer_message?.meal_item !== undefined"
-      :meal_item="last_response.answer_message.meal_item"
+      v-if="api_response?.answer_message?.meal_item !== undefined"
+      :meal_item="api_response.answer_message.meal_item"
     />
 
-    <button class="btn" @click="show_meals()" v-if="last_response?.meal_list !== undefined">
+    <button class="btn" @click="show_meals()" v-if="api_response?.meal_list !== undefined">
       Alle Gerichte
     </button>
     <p class="answer">
-      {{ last_response?.answer_message?.msg }}
+      {{ api_response?.answer_message?.msg }}
     </p>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, PropType } from 'vue';
   import router from '../router';
   import MealAnswerCard from './MealAnswerCard.vue';
 
@@ -26,17 +26,19 @@
     components: {
       MealAnswerCard,
     },
+    props: {
+      api_response: {
+        type: Object as PropType<IApiResponse>,
+        required: true,
+      },
+      is_chat_view: { type: Boolean, default: false },
+    },
     methods: {
       show_chat(): void {
-        router.push({ name: 'chat' });
+        if (!this.is_chat_view) router.push({ name: 'chat' });
       },
       show_meals(): void {
         router.push({ name: 'meals' });
-      },
-    },
-    computed: {
-      last_response(): IApiResponse {
-        return this.$store.getters.last_api_response;
       },
     },
   });
@@ -52,6 +54,7 @@
     overflow-y: auto;
     max-width: 600px;
     min-width: 30%;
+    font-size: 1em;
   }
 
   .card:hover {

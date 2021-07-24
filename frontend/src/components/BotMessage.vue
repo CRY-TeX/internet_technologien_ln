@@ -1,13 +1,20 @@
 <template>
-  <MealCard v-if="api_response.answer_message.preview_url !== undefined" :api_response="api_response" />
-  <TextMessage v-else :is_user="false" :msg="api_response.answer_message.msg" />
+  <AnswerCard
+    v-if="api_response.answer_message?.meal_item !== undefined"
+    :api_response="api_response"
+    :is_chat_view="true"
+  />
+  <TextMessage
+    v-else-if="api_response.answer_message.msg !== ''"
+    :is_user="false"
+    :msg="api_response.answer_message.msg"
+  />
 </template>
 
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
-
-  import TextMessage from '../TextMessage.vue';
-  import MealCard from './MealCard.vue';
+  import AnswerCard from './AnswerCard.vue';
+  import TextMessage from './TextMessage.vue';
 
   import { IApiResponse } from '@/types/api_response_data.interface';
 
@@ -15,7 +22,7 @@
     name: 'UserMessage',
     components: {
       TextMessage,
-      MealCard,
+      AnswerCard,
     },
     props: {
       api_response: {
