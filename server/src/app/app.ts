@@ -8,7 +8,6 @@ import BotUserConnector from './bot_user_connector';
 export default class App {
   readonly host_name: string;
   readonly port: number;
-  readonly debug: boolean;
 
   private express_app: express.Express;
   private http_server: http.Server;
@@ -21,10 +20,9 @@ export default class App {
    *
    * creates an http server that hosts an express app and a websocket server
    */
-  public constructor(host_name: string, port: number, debug: boolean = false) {
+  public constructor(host_name: string, port: number) {
     this.host_name = host_name;
     this.port = port;
-    this.debug = debug;
     this.express_app = express();
     this.http_server = http.createServer(this.express_app);
     this.ws_server = new websocket.server({
@@ -38,9 +36,9 @@ export default class App {
    * start all server
    */
   public start(): void {
-    if (!this.debug) this.set_express_app_routes();
-
+    this.set_express_app_routes();
     this.set_websocket_events();
+
     this.http_server.listen(this.port, this.host_name, () => {
       console.log(`Server started: ${this.http_url}`);
     });
