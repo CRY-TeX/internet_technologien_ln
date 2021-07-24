@@ -12,6 +12,20 @@
       // TODO: define on close event
       this.$store.commit('connect_ws');
     },
+    computed: {
+      is_ws_connected() {
+        return this.$store.state.connected;
+      },
+    },
+    watch: {
+      is_ws_connected: function() {
+        const interval: number = setInterval(() => {
+          if (this.is_ws_connected) clearInterval(interval);
+
+          this.$store.commit('connect_ws');
+        }, 1000);
+      },
+    },
   });
 </script>
 

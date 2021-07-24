@@ -3,7 +3,7 @@
     <PageBar page_name="Chat" />
 
     <div class="msg-box" v-for="item in get_conversation" :key="item.id">
-      <TextMessage class="user-msg" :is_user="true" :msg="item.query" />
+      <TextMessage v-if="item.query !== ''" class="user-msg" :is_user="true" :msg="item.query" />
       <BotMessage class="bot-msg" :api_response="item" />
     </div>
   </div>
