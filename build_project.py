@@ -21,6 +21,7 @@ def build():
         server_build_dir = os.path.join(curdir, "server")
         sp.call(f'cd {server_build_dir} && npm run build', shell=True)
         copy_tree(f'{os.path.join(server_build_dir, "out")}', f'{os.path.join(curdir, "build")}')
+        copy_tree(f'{os.path.join(server_build_dir, "data")}', f'{os.path.join(curdir, "build/data")}')
 
     if build_frontend:
         print('Building frontend')

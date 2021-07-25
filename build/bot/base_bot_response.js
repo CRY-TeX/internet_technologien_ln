@@ -34,7 +34,7 @@ var BaseBotResponse = /** @class */ (function () {
     BaseBotResponse.ID = 0;
     BaseBotResponse._read_data = (function () {
         try {
-            var content = fs_1.default.readFileSync(__dirname + '/../data/bot_response.json', 'utf8');
+            var content = fs_1.default.readFileSync(__dirname + '/../../data/bot_response.json', 'utf8');
             BaseBotResponse.data = JSON.parse(content);
         }
         catch (error) {
