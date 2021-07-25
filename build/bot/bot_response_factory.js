@@ -44,6 +44,7 @@ var BotResponseFactory = /** @class */ (function () {
         this.response_class_names = [
             bot_responses_1.RandomFoodBotResponse,
             bot_responses_1.FoodOfTheDayBotResponse,
+            bot_responses_1.RegionalBotResponse,
             bot_responses_1.LunchBotResponse,
             bot_responses_1.NoneBotResponse,
         ];

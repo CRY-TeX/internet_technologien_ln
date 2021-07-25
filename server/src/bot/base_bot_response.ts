@@ -20,7 +20,6 @@ export default abstract class BaseBotResponse {
       console.error(error);
       BaseBotResponse.data = {};
     }
-    console.log(BaseBotResponse.data);
   })();
 
   public constructor(luis_data: ILuisData, context: BaseBotResponse[]) {

@@ -41,17 +41,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var node_fetch_1 = __importDefault(require("node-fetch"));
 var bot_response_factory_1 = require("./bot_response_factory");
+var base_bot_response_1 = __importDefault(require("./base_bot_response"));
+var util_1 = require("../util/util");
 var Bot = /** @class */ (function () {
     function Bot() {
         this.bot_response_factory = new bot_response_factory_1.BotResponseFactory();
     }
     Bot.prototype.get_inital = function () {
+        var _a, _b, _c, _d;
         return {
             id: 0,
             query: '',
             answer_message: {
-                msg: 'This is the inital message',
+                msg: (_b = (_a = base_bot_response_1.default.get_data()) === null || _a === void 0 ? void 0 : _a.inital_msg) === null || _b === void 0 ? void 0 : _b.msg,
             },
+            suggestions: util_1.rand_slice((_d = (_c = base_bot_response_1.default.get_data()) === null || _c === void 0 ? void 0 : _c.inital_msg) === null || _d === void 0 ? void 0 : _d.suggestions),
         };
     };
     // TODO: fix any later

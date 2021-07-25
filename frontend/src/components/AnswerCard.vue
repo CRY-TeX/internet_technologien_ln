@@ -5,7 +5,7 @@
       :meal_item="api_response.answer_message.meal_item"
     />
 
-    <button class="btn" @click="show_meals()" v-if="api_response?.meal_list !== undefined">
+    <button class="btn" @click="show_meals()" v-if="api_response?.meal_list !== undefined && !is_chat_view">
       Alle Gerichte
     </button>
     <p class="answer">

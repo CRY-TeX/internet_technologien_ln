@@ -65,9 +65,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LunchBotResponse = exports.RandomFoodBotResponse = exports.FoodOfTheDayBotResponse = exports.NoneBotResponse = void 0;
+exports.LunchBotResponse = exports.RegionalBotResponse = exports.RandomFoodBotResponse = exports.FoodOfTheDayBotResponse = exports.NoneBotResponse = void 0;
 var base_bot_response_1 = __importDefault(require("./base_bot_response"));
 var chefkoch_scrape_1 = require("../util/chefkoch_scrape");
+var util_1 = require("../util/util");
 var NoneBotResponse = /** @class */ (function (_super) {
     __extends(NoneBotResponse, _super);
     function NoneBotResponse(luis_data, context) {
@@ -80,12 +81,13 @@ var NoneBotResponse = /** @class */ (function (_super) {
         return _this;
     }
     NoneBotResponse.prototype.analyze_data = function () {
+        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function () {
             var last_context_item;
-            return __generator(this, function (_a) {
+            return __generator(this, function (_d) {
                 last_context_item = this.context[this.context.length - 1];
                 this.response_data = __assign(__assign({}, this.response_boilerplate()), { answer_message: {
-                        msg: 'Ich konnte sie nicht richtig verstehen. Können Sie das bitte wiederholen?',
+                        msg: util_1.rand_choice((_c = (_b = (_a = base_bot_response_1.default.get_data()) === null || _a === void 0 ? void 0 : _a.intents) === null || _b === void 0 ? void 0 : _b.None) === null || _c === void 0 ? void 0 : _c.answers),
                     } });
                 return [2 /*return*/];
             });
@@ -178,6 +180,66 @@ var RandomFoodBotResponse = /** @class */ (function (_super) {
     return RandomFoodBotResponse;
 }(base_bot_response_1.default));
 exports.RandomFoodBotResponse = RandomFoodBotResponse;
+var RegionalBotResponse = /** @class */ (function (_super) {
+    __extends(RegionalBotResponse, _super);
+    function RegionalBotResponse(luis_data, context) {
+        var _this = _super.call(this, luis_data, context) || this;
+        _this.SCHEMA = {
+            prediction: {
+                topIntent: 'want-food',
+                entities: {
+                    region: '*',
+                },
+            },
+        };
+        return _this;
+    }
+    RegionalBotResponse.prototype.analyze_data = function () {
+        var _a, _b, _c, _d;
+        return __awaiter(this, void 0, void 0, function () {
+            var region_name, category, keys, search_url, meal_items;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
+                    case 0:
+                        region_name = (_d = (_c = (_b = (_a = this.luis_data) === null || _a === void 0 ? void 0 : _a.prediction) === null || _b === void 0 ? void 0 : _b.entities) === null || _c === void 0 ? void 0 : _c['menu-type']) === null || _d === void 0 ? void 0 : _d[0];
+                        if (!(region_name === undefined)) return [3 /*break*/, 1];
+                        this.response_data = __assign(__assign({}, this.response_boilerplate()), { answer_message: {
+                                msg: 'Von welcher Region möchten Sie ein Gericht zubereiten?',
+                            } });
+                        return [3 /*break*/, 3];
+                    case 1:
+                        category = null;
+                        keys = Object.keys(region_name);
+                        if (keys.includes('Afrika'))
+                            category = { id: 's0g101', html_file: 'Afrikanische-Rezepte.html' };
+                        if (keys.includes('Asien'))
+                            category = { id: 's0g94', html_file: 'Asiatische-Rezepte.html' };
+                        if (keys.includes('Amerika'))
+                            category = { id: 's0g98', html_file: 'Amerikanische-Rezepte.html' };
+                        search_url = category === null ? chefkoch_scrape_1.build_search_url('') : chefkoch_scrape_1.build_search_url('', category);
+                        return [4 /*yield*/, chefkoch_scrape_1.query_recipes(search_url)];
+                    case 2:
+                        meal_items = _e.sent();
+                        if (meal_items !== null && (meal_items === null || meal_items === void 0 ? void 0 : meal_items.length) > 0) {
+                            this.response_data = __assign(__assign({}, this.response_boilerplate()), { answer_message: {
+                                    msg: 'Folgendes Regionales Essen kann ich Ihnen vorschlagen.',
+                                    meal_item: meal_items[0],
+                                }, meal_list: meal_items });
+                        }
+                        else {
+                            this.response_data = __assign(__assign({}, this.response_boilerplate()), { answer_message: {
+                                    msg: 'Ich konnte Ihnen leider keine passenden Rezepte finden.',
+                                } });
+                        }
+                        _e.label = 3;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return RegionalBotResponse;
+}(base_bot_response_1.default));
+exports.RegionalBotResponse = RegionalBotResponse;
 var LunchBotResponse = /** @class */ (function (_super) {
     __extends(LunchBotResponse, _super);
     function LunchBotResponse(luis_data, context) {
@@ -203,11 +265,7 @@ var LunchBotResponse = /** @class */ (function (_super) {
                         if (!(menu_type === undefined)) return [3 /*break*/, 1];
                         this.response_data = __assign(__assign({}, this.response_boilerplate()), { answer_message: {
                                 msg: 'Was für eine Art von Essen möchten Sie denn haben?',
-                            }, suggestions: [
-                                'Ich möchte ein Mittagessen kochen',
-                                'Ich möchte etwas amerikanisches machen',
-                                'Ich will eine Beilage machen',
-                            ] });
+                            } });
                         return [3 /*break*/, 3];
                     case 1:
                         category = null;

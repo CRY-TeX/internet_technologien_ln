@@ -92,6 +92,62 @@ export class RandomFoodBotResponse extends BaseBotResponse {
   }
 }
 
+export class RegionalBotResponse extends BaseBotResponse {
+  public readonly SCHEMA: ILuisData;
+
+  public constructor(luis_data: ILuisData, context: BaseBotResponse[]) {
+    super(luis_data, context);
+
+    this.SCHEMA = {
+      prediction: {
+        topIntent: 'want-food',
+        entities: {
+          region: '*',
+        },
+      },
+    };
+  }
+
+  public async analyze_data(): Promise<void> {
+    const region_name: any = (this.luis_data?.prediction?.entities as any)?.['menu-type']?.[0];
+    if (region_name === undefined) {
+      this.response_data = {
+        ...this.response_boilerplate(),
+        answer_message: {
+          msg: 'Von welcher Region möchten Sie ein Gericht zubereiten?',
+        },
+      };
+    } else {
+      let category: Category | null = null;
+      const keys: string[] = Object.keys(region_name);
+      if (keys.includes('Afrika')) category = { id: 's0g101', html_file: 'Afrikanische-Rezepte.html' };
+      if (keys.includes('Asien')) category = { id: 's0g94', html_file: 'Asiatische-Rezepte.html' };
+      if (keys.includes('Amerika')) category = { id: 's0g98', html_file: 'Amerikanische-Rezepte.html' };
+
+      const search_url = category === null ? build_search_url('') : build_search_url('', category);
+      const meal_items: IMealItem[] | null = await query_recipes(search_url);
+
+      if (meal_items !== null && meal_items?.length > 0) {
+        this.response_data = {
+          ...this.response_boilerplate(),
+          answer_message: {
+            msg: 'Folgendes Regionales Essen kann ich Ihnen vorschlagen.',
+            meal_item: meal_items[0],
+          },
+          meal_list: meal_items,
+        };
+      } else {
+        this.response_data = {
+          ...this.response_boilerplate(),
+          answer_message: {
+            msg: 'Ich konnte Ihnen leider keine passenden Rezepte finden.',
+          },
+        };
+      }
+    }
+  }
+}
+
 export class LunchBotResponse extends BaseBotResponse {
   public readonly SCHEMA: ILuisData;
 
@@ -116,11 +172,6 @@ export class LunchBotResponse extends BaseBotResponse {
         answer_message: {
           msg: 'Was für eine Art von Essen möchten Sie denn haben?',
         },
-        suggestions: [
-          'Ich möchte ein Mittagessen kochen',
-          'Ich möchte etwas amerikanisches machen',
-          'Ich will eine Beilage machen',
-        ],
       };
     } else {
       let category: Category | null = null;
