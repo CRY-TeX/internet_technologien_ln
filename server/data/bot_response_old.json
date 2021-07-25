@@ -1,0 +1,57 @@
+[
+    {
+        "intent": "None",
+        "answers": [
+            "Entschuldigen Sie, ich habe sie nicht verstanden.",
+            "Können sie das bitte nochmal wiederholen",
+            "Ich konnte sie leider nicht verstehen.",
+            "Wie bitte?"
+        ]
+    },
+    {
+        "intent": "want-food",
+        "required-score": 0.8,
+        "answers": [
+            {
+                "name": "Mittagessen",
+                "action": "ask",
+                "answers": [
+                    "Was für eine Art von Mittagessen stellen Sie sich denn vor?",
+                    "Haben Sie eine bestimmte Vorstellung?"
+                ]
+            },
+            {
+                "name": "Frühstück",
+                "action": "ask",
+                "answers": [
+                    "Haben Sie eine bestimmte Vorstellung?",
+                    "Was für eine Art von Frühstück möchten Sie denn gerne machen?"
+                ]
+            },
+            {
+                "name": "Abendessen",
+                "action": "ask",
+                "answers": [
+                    "Haben Sie eine bestimmte Vorstellung?",
+                    "Was für eine Art von Abendessen möchten Sie denn gerne machen?"
+                ]
+            },
+            {
+                "name": "Beilage",
+                "action": "ask",
+                "answers": [
+                    "Haben Sie eine bestimmte Vorstellung?",
+                    "Was für eine Art von Beilage möchten Sie denn gerne machen?"
+                ]
+            },
+            {
+                "name": "Nachtisch",
+                "action": "ask",
+                "answers": [
+                    "Haben Sie eine bestimmte Vorstellung?",
+                    "Was für eine Art von Nachtisch möchten Sie denn gerne machen?"
+                ]
+            }
+        ]
+    }
+]

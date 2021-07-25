@@ -20,7 +20,10 @@
     watch: {
       is_ws_connected: function() {
         const interval: number = setInterval(() => {
-          if (this.is_ws_connected) clearInterval(interval);
+          if (this.is_ws_connected) {
+            clearInterval(interval);
+            return;
+          }
 
           this.$store.commit('connect_ws');
         }, 1000);

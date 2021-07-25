@@ -10,6 +10,7 @@ import {
   query_recipes,
 } from '../util/chefkoch_scrape';
 import { IMealItem } from '../types/api_response_data.interface';
+import { rand_choice, rand_slice } from '../util/util';
 
 export class NoneBotResponse extends BaseBotResponse {
   public readonly SCHEMA: ILuisData;
@@ -30,7 +31,7 @@ export class NoneBotResponse extends BaseBotResponse {
     this.response_data = {
       ...this.response_boilerplate(),
       answer_message: {
-        msg: 'Ich konnte sie nicht richtig verstehen. Können Sie das bitte wiederholen?',
+        msg: rand_choice(BaseBotResponse.get_data()?.intents?.None?.answers),
       },
     };
   }

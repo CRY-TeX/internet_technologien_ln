@@ -4,6 +4,7 @@ import { IApiResponse } from '../types/api_response_data.interface';
 import { ILuisData } from '../types/luis_data.interface';
 import { BotResponseFactory } from './bot_response_factory';
 import BaseBotResponse from './base_bot_response';
+import { rand_slice } from '../util/util';
 
 type BotResponseHandler = (response: IApiResponse | null) => void;
 
@@ -22,8 +23,9 @@ export default class Bot {
       id: 0,
       query: '',
       answer_message: {
-        msg: 'This is the inital message',
+        msg: BaseBotResponse.get_data()?.inital_msg?.msg,
       },
+      suggestions: rand_slice(BaseBotResponse.get_data()?.inital_msg?.suggestions),
     };
   }
 

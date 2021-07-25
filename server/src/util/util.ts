@@ -22,3 +22,16 @@ export function matches_schema(schema: any, obj: any, ignore: string = '*'): boo
   }
   return true;
 }
+
+export function rand_choice(arr: any[]): any | null {
+  if (!(arr instanceof Array)) return null;
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export function rand_slice(arr: any[], num_el: number = 3): any[] {
+  if (!(arr instanceof Array)) return [];
+
+  const start = arr.length > num_el ? Math.floor(Math.random() * (arr.length - num_el)) : 0;
+  const end = start + num_el > arr.length ? arr.length : start + num_el;
+  return arr.slice(start, end);
+}
