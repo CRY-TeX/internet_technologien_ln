@@ -9,6 +9,10 @@ import {
   RandomFoodBotResponse,
 } from './bot_responses';
 
+/**
+ * This class is responsible for creating the bot responses.
+ * I searches for a fit in the registered responses, creates it, analyzes the data and returns it to the bot.
+ */
 export class BotResponseFactory {
   private context: BaseBotResponse[] = [];
   public readonly response_class_names = [

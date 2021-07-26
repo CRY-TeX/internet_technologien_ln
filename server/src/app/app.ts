@@ -5,6 +5,10 @@ import net from 'net';
 
 import BotUserConnector from './bot_user_connector';
 
+/**
+ * Main application class which encapulates the express and the websocket server.
+ * It manages all the connections and the bots as well as serving the vue frontend application.
+ */
 export default class App {
   readonly host_name: string;
   readonly port: number;

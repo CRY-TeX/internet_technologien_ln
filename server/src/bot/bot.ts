@@ -8,6 +8,11 @@ import { rand_slice } from '../util/util';
 
 type BotResponseHandler = (response: IApiResponse | null) => void;
 
+/**
+ * This class represents a bot that can be used to interact with LUIS.
+ * It gets the query from the user and sends it to LUIS.
+ * Then it request the right bot_response from the factory and sends it back to the user.
+ */
 export default class Bot {
   private bot_response_factory: BotResponseFactory;
 
@@ -29,7 +34,6 @@ export default class Bot {
     };
   }
 
-  // TODO: fix any later
   private async fetch_luis(msg: string): Promise<ILuisData | null> {
     try {
       const res: FetchResponse = await fetch(`${Bot.LUIS_ENDPONT}${msg}`);

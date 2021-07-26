@@ -5,6 +5,10 @@ import fs from 'fs';
 import { path as root_path } from 'app-root-path';
 import path from 'path';
 
+/**
+ *  respresents the base class for bot responses.
+ *  Every bot response must extend this class.
+ */
 export default abstract class BaseBotResponse {
   private static ID: number = 0;
   abstract readonly SCHEMA: ILuisData;

@@ -1,9 +1,5 @@
 /**
- * WHICH SCRAPERS DO I NEED?
- *
- * - normal recipe searches
- * - random recipes
- * - suggestion of the day
+ * This is a module with helper functions to scrape the recipe data from the chefkoch.de website.
  */
 import fetch, { Response as FetchResponse } from 'node-fetch';
 import jsdom from 'jsdom';

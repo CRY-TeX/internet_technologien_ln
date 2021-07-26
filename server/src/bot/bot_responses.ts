@@ -12,6 +12,10 @@ import {
 import { IMealItem } from '../types/api_response_data.interface';
 import { rand_choice, rand_slice } from '../util/util';
 
+/**
+ * This module contains all the responses that the bot can give to the user.
+ */
+
 export class NoneBotResponse extends BaseBotResponse {
   public readonly SCHEMA: ILuisData;
 
