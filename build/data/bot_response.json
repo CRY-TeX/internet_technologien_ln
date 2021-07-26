@@ -1,73 +1,28 @@
 {
-    "inital_msg": {
-        "msg": "Willkommen bei \"The Unsure Cook\"\n\nIch bin für jeden da, der sich nicht dafür entscheiden kann, was er essen möchte. Fragen Sie mich einfach und ich garantiere Ihnen, dass der Magen immer voll und der Geldbeutel immer leer sein wird :p\n\nSie können mich zu folgenden Themen befragen:\n- Essen des Tages (keine Präferenz, vegetarisch, vegan)\n- Mittagessen, Frühstück, Dessert, etc.\n- Regionales Essen (amerikanisch, afrikanisch, etc.)",
-        "suggestions": [
-            "Essen des Tages",
-            "Essen des Tages vegetarisch",
-            "Essen des Tages vegan",
-            "Ich will ein Mittagessen machen",
-            "Schlage mir ein zufälliges Essen vor",
-            "Ich will ein Desert machen",
-            "Schlage mir ein afrikanisches Gericht vor",
-            "Schlage mir ein asiatisches Gericht vor"
-        ]
-    },
+    "suggestions": [
+        "Essen des Tages",
+        "Essen des Tages vegetarisch",
+        "Essen des Tages vegan",
+        "Ich will ein Mittagessen machen",
+        "Schlage mir ein zufälliges Essen vor",
+        "Ich will ein Desert machen",
+        "Schlage mir ein afrikanisches Gericht vor",
+        "Schlage mir ein asiatisches Gericht vor",
+        "Was kann ich hier machen?",
+        "Hilfe"
+    ],
     "intents": {
+        "help": {
+            "answers": [
+                "Willkommen bei \"The Unsure Cook\"\n\nIch bin für jeden da, der sich nicht dafür entscheiden kann, was er essen möchte. Fragen Sie mich einfach und ich garantiere Ihnen, dass der Magen immer voll und der Geldbeutel immer leer sein wird :p\n\nSie können mich zu folgenden Themen befragen:\n- Essen des Tages (keine Präferenz, vegetarisch, vegan)\n- Mittagessen, Frühstück, Dessert, etc.\n- Regionales Essen (amerikanisch, afrikanisch, etc.)"
+            ]
+        },
         "None": {
             "answers": [
                 "Entschuldigen Sie, ich habe sie nicht verstanden.",
                 "Können sie das bitte nochmal wiederholen",
                 "Ich konnte sie leider nicht verstehen.",
                 "Wie bitte?"
-            ]
-        },
-        "want-food": {
-            "answers": [
-                {
-                    "entities": [
-                        "Mittagessen"
-                    ],
-                    "answers": [
-                        "Was für eine Art von Mittagessen stellen Sie sich denn vor?",
-                        "Haben Sie eine bestimmte Vorstellung?"
-                    ]
-                },
-                {
-                    "entities": [
-                        "Frühstück"
-                    ],
-                    "answers": [
-                        "Haben Sie eine bestimmte Vorstellung?",
-                        "Was für eine Art von Frühstück möchten Sie denn gerne machen?"
-                    ]
-                },
-                {
-                    "entities": [
-                        "Abendessen"
-                    ],
-                    "answers": [
-                        "Haben Sie eine bestimmte Vorstellung?",
-                        "Was für eine Art von Abendessen möchten Sie denn gerne machen?"
-                    ]
-                },
-                {
-                    "entities": [
-                        "Beilage"
-                    ],
-                    "answers": [
-                        "Haben Sie eine bestimmte Vorstellung?",
-                        "Was für eine Art von Beilage möchten Sie denn gerne machen?"
-                    ]
-                },
-                {
-                    "entities": [
-                        "Nachtisch"
-                    ],
-                    "answers": [
-                        "Haben Sie eine bestimmte Vorstellung?",
-                        "Was für eine Art von Nachtisch möchten Sie denn gerne machen?"
-                    ]
-                }
             ]
         }
     }

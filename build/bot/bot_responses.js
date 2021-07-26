@@ -65,10 +65,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LunchBotResponse = exports.RegionalBotResponse = exports.RandomFoodBotResponse = exports.FoodOfTheDayBotResponse = exports.NoneBotResponse = void 0;
+exports.LunchBotResponse = exports.RegionalBotResponse = exports.RandomFoodBotResponse = exports.FoodOfTheDayBotResponse = exports.HelpBotResponse = exports.NoneBotResponse = void 0;
 var base_bot_response_1 = __importDefault(require("./base_bot_response"));
 var chefkoch_scrape_1 = require("../util/chefkoch_scrape");
-var util_1 = require("../util/util");
 var NoneBotResponse = /** @class */ (function (_super) {
     __extends(NoneBotResponse, _super);
     function NoneBotResponse(luis_data, context) {
@@ -81,13 +80,11 @@ var NoneBotResponse = /** @class */ (function (_super) {
         return _this;
     }
     NoneBotResponse.prototype.analyze_data = function () {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function () {
-            var last_context_item;
-            return __generator(this, function (_d) {
-                last_context_item = this.context[this.context.length - 1];
-                this.response_data = __assign(__assign({}, this.response_boilerplate()), { answer_message: {
-                        msg: util_1.rand_choice((_c = (_b = (_a = base_bot_response_1.default.get_data()) === null || _a === void 0 ? void 0 : _a.intents) === null || _b === void 0 ? void 0 : _b.None) === null || _c === void 0 ? void 0 : _c.answers),
+            return __generator(this, function (_e) {
+                this.response_data = __assign(__assign({}, this.response_boilerplate()), { query: '', answer_message: {
+                        msg: (_d = (_c = (_b = (_a = base_bot_response_1.default.get_data()) === null || _a === void 0 ? void 0 : _a.intents) === null || _b === void 0 ? void 0 : _b.help) === null || _c === void 0 ? void 0 : _c.answers) === null || _d === void 0 ? void 0 : _d[0],
                     } });
                 return [2 /*return*/];
             });
@@ -96,6 +93,31 @@ var NoneBotResponse = /** @class */ (function (_super) {
     return NoneBotResponse;
 }(base_bot_response_1.default));
 exports.NoneBotResponse = NoneBotResponse;
+var HelpBotResponse = /** @class */ (function (_super) {
+    __extends(HelpBotResponse, _super);
+    function HelpBotResponse(luis_data, context) {
+        var _this = _super.call(this, luis_data, context) || this;
+        _this.SCHEMA = {
+            prediction: {
+                topIntent: 'help',
+            },
+        };
+        return _this;
+    }
+    HelpBotResponse.prototype.analyze_data = function () {
+        var _a, _b, _c, _d;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_e) {
+                this.response_data = __assign(__assign({}, this.response_boilerplate()), { answer_message: {
+                        msg: (_d = (_c = (_b = (_a = base_bot_response_1.default.get_data()) === null || _a === void 0 ? void 0 : _a.intents) === null || _b === void 0 ? void 0 : _b.help) === null || _c === void 0 ? void 0 : _c.answers) === null || _d === void 0 ? void 0 : _d[0],
+                    } });
+                return [2 /*return*/];
+            });
+        });
+    };
+    return HelpBotResponse;
+}(base_bot_response_1.default));
+exports.HelpBotResponse = HelpBotResponse;
 var FoodOfTheDayBotResponse = /** @class */ (function (_super) {
     __extends(FoodOfTheDayBotResponse, _super);
     function FoodOfTheDayBotResponse(luis_data, context) {
@@ -201,7 +223,7 @@ var RegionalBotResponse = /** @class */ (function (_super) {
             return __generator(this, function (_e) {
                 switch (_e.label) {
                     case 0:
-                        region_name = (_d = (_c = (_b = (_a = this.luis_data) === null || _a === void 0 ? void 0 : _a.prediction) === null || _b === void 0 ? void 0 : _b.entities) === null || _c === void 0 ? void 0 : _c['menu-type']) === null || _d === void 0 ? void 0 : _d[0];
+                        region_name = (_d = (_c = (_b = (_a = this.luis_data) === null || _a === void 0 ? void 0 : _a.prediction) === null || _b === void 0 ? void 0 : _b.entities) === null || _c === void 0 ? void 0 : _c['region']) === null || _d === void 0 ? void 0 : _d[0];
                         if (!(region_name === undefined)) return [3 /*break*/, 1];
                         this.response_data = __assign(__assign({}, this.response_boilerplate()), { answer_message: {
                                 msg: 'Von welcher Region möchten Sie ein Gericht zubereiten?',

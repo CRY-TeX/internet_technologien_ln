@@ -1,6 +1,7 @@
 import { ILuisData } from '../types/luis_data.interface';
 import BaseBotResponse from './base_bot_response';
 import {
+  HelpBotResponse,
   FoodOfTheDayBotResponse,
   RegionalBotResponse,
   LunchBotResponse,
@@ -12,6 +13,7 @@ export class BotResponseFactory {
   private context: BaseBotResponse[] = [];
   public readonly response_class_names = [
     RandomFoodBotResponse,
+    HelpBotResponse,
     FoodOfTheDayBotResponse,
     RegionalBotResponse,
     LunchBotResponse,

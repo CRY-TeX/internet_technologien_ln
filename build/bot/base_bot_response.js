@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("../util/util");
 var fs_1 = __importDefault(require("fs"));
+var app_root_path_1 = require("app-root-path");
+var path_1 = __importDefault(require("path"));
 var BaseBotResponse = /** @class */ (function () {
     function BaseBotResponse(luis_data, context) {
         this.luis_data = luis_data;
@@ -18,14 +20,14 @@ var BaseBotResponse = /** @class */ (function () {
         return util_1.matches_schema(this.SCHEMA, luis_data);
     };
     BaseBotResponse.prototype.response_boilerplate = function () {
-        var _a, _b;
+        var _a;
         BaseBotResponse.ID++;
         return {
             id: BaseBotResponse.ID,
             query: this.luis_data.query === undefined
                 ? 'Upps, etwas ist schiefgelaufen... Keine Nachricht gefunden'
                 : this.luis_data.query,
-            suggestions: util_1.rand_slice((_b = (_a = BaseBotResponse.get_data()) === null || _a === void 0 ? void 0 : _a.inital_msg) === null || _b === void 0 ? void 0 : _b.suggestions),
+            suggestions: util_1.rand_slice((_a = BaseBotResponse.get_data()) === null || _a === void 0 ? void 0 : _a.suggestions),
         };
     };
     BaseBotResponse.get_data = function () {
@@ -34,7 +36,7 @@ var BaseBotResponse = /** @class */ (function () {
     BaseBotResponse.ID = 0;
     BaseBotResponse._read_data = (function () {
         try {
-            var content = fs_1.default.readFileSync(__dirname + '/../../data/bot_response.json', 'utf8');
+            var content = fs_1.default.readFileSync(path_1.default.join(app_root_path_1.path, '/data/bot_response.json'), 'utf8');
             BaseBotResponse.data = JSON.parse(content);
         }
         catch (error) {

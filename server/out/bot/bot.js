@@ -48,14 +48,14 @@ var Bot = /** @class */ (function () {
         this.bot_response_factory = new bot_response_factory_1.BotResponseFactory();
     }
     Bot.prototype.get_inital = function () {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         return {
             id: 0,
             query: '',
             answer_message: {
-                msg: (_b = (_a = base_bot_response_1.default.get_data()) === null || _a === void 0 ? void 0 : _a.inital_msg) === null || _b === void 0 ? void 0 : _b.msg,
+                msg: (_d = (_c = (_b = (_a = base_bot_response_1.default.get_data()) === null || _a === void 0 ? void 0 : _a.intents) === null || _b === void 0 ? void 0 : _b.help) === null || _c === void 0 ? void 0 : _c.answers) === null || _d === void 0 ? void 0 : _d[0],
             },
-            suggestions: util_1.rand_slice((_d = (_c = base_bot_response_1.default.get_data()) === null || _c === void 0 ? void 0 : _c.inital_msg) === null || _d === void 0 ? void 0 : _d.suggestions),
+            suggestions: util_1.rand_slice((_e = base_bot_response_1.default.get_data()) === null || _e === void 0 ? void 0 : _e.suggestions),
         };
     };
     // TODO: fix any later

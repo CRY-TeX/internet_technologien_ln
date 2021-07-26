@@ -23,9 +23,9 @@ export default class Bot {
       id: 0,
       query: '',
       answer_message: {
-        msg: BaseBotResponse.get_data()?.inital_msg?.msg,
+        msg: BaseBotResponse.get_data()?.intents?.help?.answers?.[0],
       },
-      suggestions: rand_slice(BaseBotResponse.get_data()?.inital_msg?.suggestions),
+      suggestions: rand_slice(BaseBotResponse.get_data()?.suggestions),
     };
   }
 

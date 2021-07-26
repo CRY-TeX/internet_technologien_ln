@@ -26,12 +26,34 @@ export class NoneBotResponse extends BaseBotResponse {
   }
 
   public async analyze_data(): Promise<void> {
-    const last_context_item: BaseBotResponse | undefined = this.context[this.context.length - 1];
+    this.response_data = {
+      ...this.response_boilerplate(),
+      query: '',
+      answer_message: {
+        msg: BaseBotResponse.get_data()?.intents?.help?.answers?.[0],
+      },
+    };
+  }
+}
 
+export class HelpBotResponse extends BaseBotResponse {
+  public readonly SCHEMA: ILuisData;
+
+  public constructor(luis_data: ILuisData, context: BaseBotResponse[]) {
+    super(luis_data, context);
+
+    this.SCHEMA = {
+      prediction: {
+        topIntent: 'help',
+      },
+    };
+  }
+
+  public async analyze_data(): Promise<void> {
     this.response_data = {
       ...this.response_boilerplate(),
       answer_message: {
-        msg: rand_choice(BaseBotResponse.get_data()?.intents?.None?.answers),
+        msg: BaseBotResponse.get_data()?.intents?.help?.answers?.[0],
       },
     };
   }
@@ -109,7 +131,7 @@ export class RegionalBotResponse extends BaseBotResponse {
   }
 
   public async analyze_data(): Promise<void> {
-    const region_name: any = (this.luis_data?.prediction?.entities as any)?.['menu-type']?.[0];
+    const region_name: any = (this.luis_data?.prediction?.entities as any)?.['region']?.[0];
     if (region_name === undefined) {
       this.response_data = {
         ...this.response_boilerplate(),

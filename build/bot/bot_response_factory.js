@@ -43,6 +43,7 @@ var BotResponseFactory = /** @class */ (function () {
         this.context = [];
         this.response_class_names = [
             bot_responses_1.RandomFoodBotResponse,
+            bot_responses_1.HelpBotResponse,
             bot_responses_1.FoodOfTheDayBotResponse,
             bot_responses_1.RegionalBotResponse,
             bot_responses_1.LunchBotResponse,

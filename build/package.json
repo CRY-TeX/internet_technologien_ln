@@ -11,14 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "app-root-path": "^3.0.0",
+    "core-js": "^3.6.5",
     "express": "^4.17.1",
     "jsdom": "^16.6.0",
     "node-fetch": "^2.6.1",
-    "websocket": "^1.0.34",
-    "core-js": "^3.6.5",
     "three": "^0.129.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.8",
-    "vuex": "^4.0.1"
+    "vuex": "^4.0.1",
+    "websocket": "^1.0.34"
   }
 }
